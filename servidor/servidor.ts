@@ -1,6 +1,6 @@
 //importaciones
 
-import express, { response } from "express";
+import express from "express";
 import "./config/config";
 import mongoose from "mongoose";
 import * as bodyParser from "body-parser"; //se le pone un alias a la importacion de body-parser
@@ -29,20 +29,15 @@ app.use(bodyParser.urlencoded({extended:true})) //Esto se pone para usar el body
 app.use('/api',routes); // en routes se recibe la ruta de la api y se le concatena /api, ejemplo /api/algo/idAlgo. /algo/idAlgo = routes
 
 //Conexion a la bd
-mongoose.connect(`${process.env.URLDB}`, {
-    useNewUrlParser : true,
+mongoose.connect("mongodb+srv://d39cef66:d39cef66@appadmin.bxxb3.mongodb.net/mongoprueba?retryWrites=true&w=majority", {
+    //useNewUrlParser : true,
     useCreateIndex: true,
     useUnifiedTopology: true,
     useFindAndModify: false
 }).then((resp: any)=>{
-    
-    return response.status(200).json({
-        mensaje:"Noma por dos"
-    })
+    console.log("[MONGODB] Se ha conectado satisfactoriamente a la base de datos");
 }).catch((err:any) =>{
-    return response.status(500).json({
-        mensaje:"noma"
-    })
+    console.log("[MONGODB] Ocurrio un error al intentar conectar la base de datos");
 })
 
 

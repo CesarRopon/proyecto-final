@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importStar(require("express"));
+var express_1 = __importDefault(require("express"));
 require("./config/config");
 var mongoose_1 = __importDefault(require("mongoose"));
 var bodyParser = __importStar(require("body-parser")); //se le pone un alias a la importacion de body-parser
@@ -43,19 +43,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); //Esto se pone para usar el body-parser
 app.use('/api', index_1.default); // en routes se recibe la ruta de la api y se le concatena /api, ejemplo /api/algo/idAlgo. /algo/idAlgo = routes
 //Conexion a la bd
-mongoose_1.default.connect("" + process.env.URLDB, {
-    useNewUrlParser: true,
+mongoose_1.default.connect("mongodb+srv://d39cef66:d39cef66@appadmin.bxxb3.mongodb.net/mongoprueba?retryWrites=true&w=majority", {
+    //useNewUrlParser : true,
     useCreateIndex: true,
     useUnifiedTopology: true,
     useFindAndModify: false
 }).then(function (resp) {
-    return express_1.response.status(200).json({
-        mensaje: "Noma por dos"
-    });
+    console.log("[MONGODB] Se ha conectado satisfactoriamente a la base de datos");
 }).catch(function (err) {
-    return express_1.response.status(500).json({
-        mensaje: "noma"
-    });
+    console.log("[MONGODB] Ocurrio un error al intentar conectar la base de datos");
 });
 //Conectar servidor
 app.listen(process.env.PORT, function () {
