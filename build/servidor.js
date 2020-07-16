@@ -32,10 +32,10 @@ var cors = require('cors');
 //Declaraciones
 var app = express_1.default();
 app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-    res.setHeader('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.header('Access-Control-Allow-Origin', 'http://localhost:8100');
+    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
 });
 //Rutas
@@ -43,8 +43,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); //Esto se pone para usar el body-parser
 app.use('/api', index_1.default); // en routes se recibe la ruta de la api y se le concatena /api, ejemplo /api/algo/idAlgo. /algo/idAlgo = routes
 //Conexion a la bd
-mongoose_1.default.connect("mongodb+srv://d39cef66:d39cef66@appadmin.bxxb3.mongodb.net/mongoprueba?retryWrites=true&w=majority", {
-    //useNewUrlParser : true,
+mongoose_1.default.connect("" + process.env.URLDB, {
+    useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
     useFindAndModify: false
