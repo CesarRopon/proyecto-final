@@ -12,6 +12,9 @@ var app = express_1.Router();
 exports.app = app;
 //
 app.get('/admin', function (req, res) {
+    return res.status(200).json({
+        mensaje: "Todo bien, todo correcto"
+    });
 });
 app.post('/admin', function (req, res) {
     var admin = req.body;

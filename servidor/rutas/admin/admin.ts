@@ -9,6 +9,9 @@ const  app: Router = Router();
 //
 app.get('/admin', (req:Request, res:Response) =>{
 
+    return res.status(200).json({
+        mensaje: "Todo bien, todo correcto"
+    })
 })
 
 
