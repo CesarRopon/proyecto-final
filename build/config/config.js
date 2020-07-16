@@ -5,8 +5,8 @@ process.env.PORT = process.env.PORT || "3000";
 process.env.NODE_ENV = process.env.NODE_ENV || "dev";
 //variable global para la conexion a la bd
 if (process.env.NODE_ENV === "dev") {
-    process.env.URLDB = "mongodb://localhost:27017/bdLau";
+    process.env.URLDB = "mongodb+srv://nuevousuarioappadmin:juliocesar12345@clusterappadmin.utrfc.gcp.mongodb.net/mongobd1?retryWrites=true&w=majority";
 }
 else {
-    process.env.URLDB = "mongodb://localhost:27017/bdLau";
+    process.env.URLDB = "mongodb+srv://nuevousuarioappadmin:juliocesar12345@clusterappadmin.utrfc.gcp.mongodb.net/mongobd1?retryWrites=true&w=majority";
 }
