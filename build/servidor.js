@@ -31,7 +31,12 @@ var index_1 = __importDefault(require("./rutas/index"));
 var cors = require('cors');
 //Declaraciones
 var app = express_1.default();
-var corsOptions = { origin: "http://localhost:8100" };
+var corsOptions = {
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
+};
 app.use(cors(corsOptions));
 /*
   app.use((req, res, next) => {
