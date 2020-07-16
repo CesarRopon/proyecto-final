@@ -1,6 +1,6 @@
 //importaciones
 
-import express from "express";
+import express, { response } from "express";
 import "./config/config";
 import mongoose from "mongoose";
 import * as bodyParser from "body-parser"; //se le pone un alias a la importacion de body-parser
@@ -35,9 +35,14 @@ mongoose.connect(`${process.env.URLDB}`, {
     useUnifiedTopology: true,
     useFindAndModify: false
 }).then((resp: any)=>{
-    console.log("[MONGODB] Se ha conectado satisfactoriamente a la base de datos");
+    
+    return response.status(200).json({
+        mensaje:"Noma por dos"
+    })
 }).catch((err:any) =>{
-    console.log("[MONGODB] Ocurrio un error al intentar conectar la base de datos");
+    return response.status(500).json({
+        mensaje:"noma"
+    })
 })
 
 

@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
+var express_1 = __importStar(require("express"));
 require("./config/config");
 var mongoose_1 = __importDefault(require("mongoose"));
 var bodyParser = __importStar(require("body-parser")); //se le pone un alias a la importacion de body-parser
@@ -49,9 +49,13 @@ mongoose_1.default.connect("" + process.env.URLDB, {
     useUnifiedTopology: true,
     useFindAndModify: false
 }).then(function (resp) {
-    console.log("[MONGODB] Se ha conectado satisfactoriamente a la base de datos");
+    return express_1.response.status(200).json({
+        mensaje: "Noma por dos"
+    });
 }).catch(function (err) {
-    console.log("[MONGODB] Ocurrio un error al intentar conectar la base de datos");
+    return express_1.response.status(500).json({
+        mensaje: "noma"
+    });
 });
 //Conectar servidor
 app.listen(process.env.PORT, function () {
