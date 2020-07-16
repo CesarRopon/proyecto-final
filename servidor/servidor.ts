@@ -11,9 +11,10 @@ var cors = require('cors');
 //Declaraciones
 const app = express();
 
+const corsOptions = {origin:"http://localhost:8100"}
 
-  app.use(cors());
-
+  app.use(cors(corsOptions));
+/*
   app.use((req, res, next) => {
     
     res.header('Access-Control-Allow-Origin', '*');
@@ -23,6 +24,7 @@ const app = express();
  
     next();
 });
+*/
 //Rutas
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true})) //Esto se pone para usar el body-parser

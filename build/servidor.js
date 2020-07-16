@@ -31,14 +31,19 @@ var index_1 = __importDefault(require("./rutas/index"));
 var cors = require('cors');
 //Declaraciones
 var app = express_1.default();
-app.use(cors());
-app.use(function (req, res, next) {
+var corsOptions = { origin: "http://localhost:8100" };
+app.use(cors(corsOptions));
+/*
+  app.use((req, res, next) => {
+    
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+ 
     next();
 });
+*/
 //Rutas
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); //Esto se pone para usar el body-parser
