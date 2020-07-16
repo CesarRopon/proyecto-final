@@ -32,10 +32,6 @@ var cors = require('cors');
 //Declaraciones
 var app = express_1.default();
 app.use(cors());
-//Rutas
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); //Esto se pone para usar el body-parser
-app.use('/api', index_1.default); // en routes se recibe la ruta de la api y se le concatena /api, ejemplo /api/algo/idAlgo. /algo/idAlgo = routes
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
@@ -43,6 +39,10 @@ app.use(function (req, res, next) {
     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
 });
+//Rutas
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); //Esto se pone para usar el body-parser
+app.use('/api', index_1.default); // en routes se recibe la ruta de la api y se le concatena /api, ejemplo /api/algo/idAlgo. /algo/idAlgo = routes
 //Conexion a la bd
 mongoose_1.default.connect("" + process.env.URLDB, {
     useNewUrlParser: true,
