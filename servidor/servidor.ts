@@ -12,7 +12,7 @@ var cors = require('cors');
 const app = express();
 
 
-  
+  app.use(cors());
 
 
 //Rutas
@@ -22,7 +22,7 @@ app.use('/api',routes); // en routes se recibe la ruta de la api y se le concate
 
 app.use((req, res, next) => {
     
-    res.header('Access-Control-Allow-Origin', 'http://localhost:8100');
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
