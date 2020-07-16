@@ -4,6 +4,7 @@
   "description": "proyectobuenon",
   "main": "index.js",
   "scripts": {
+    "start": "node ./build/servidor.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
