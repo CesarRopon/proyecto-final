@@ -9,9 +9,17 @@ const  app: Router = Router();
 //
 app.get('/admin', (req:Request, res:Response) =>{
 
-    return res.status(200).json({
-        mensaje: "Todo bien, todo correcto"
+    AdminModel.find().then((persona: IAdmin[]) =>{
+        return res.status(200).json({
+            mensaje: "Todo bien, todo correcto",
+            contenido:{
+                persona
+            }
+        })
+    }).catch(()=>{
+
     })
+
 })
 
 

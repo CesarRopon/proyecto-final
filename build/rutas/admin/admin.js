@@ -12,8 +12,14 @@ var app = express_1.Router();
 exports.app = app;
 //
 app.get('/admin', function (req, res) {
-    return res.status(200).json({
-        mensaje: "Todo bien, todo correcto"
+    admin_model_1.default.find().then(function (persona) {
+        return res.status(200).json({
+            mensaje: "Todo bien, todo correcto",
+            contenido: {
+                persona: persona
+            }
+        });
+    }).catch(function () {
     });
 });
 app.post('/admin', function (req, res) {
