@@ -8,7 +8,7 @@ import * as bodyParser from "body-parser"; //se le pone un alias a la importacio
 import routes from "./rutas/index";
 var cors = require('cors');
 
-mongoose.connect(`${process.env.URLDB}`, {
+mongoose.connect("mongodb+srv://juliocesar12345:juliocesar12345@clusterappadmin.utrfc.gcp.mongodb.net/dbadmin?retryWrites=true&w=majority", {
     useNewUrlParser : true,
     useCreateIndex: true,
     useUnifiedTopology: true,

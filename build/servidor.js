@@ -30,7 +30,7 @@ var http = require('http');
 var bodyParser = __importStar(require("body-parser")); //se le pone un alias a la importacion de body-parser
 var index_1 = __importDefault(require("./rutas/index"));
 var cors = require('cors');
-mongoose_1.default.connect("" + process.env.URLDB, {
+mongoose_1.default.connect("mongodb+srv://juliocesar12345:juliocesar12345@clusterappadmin.utrfc.gcp.mongodb.net/dbadmin?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
