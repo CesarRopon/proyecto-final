@@ -3,40 +3,11 @@
 import express from "express";
 import "./config/config";
 import mongoose from "mongoose";
+var http = require('http');
 import * as bodyParser from "body-parser"; //se le pone un alias a la importacion de body-parser
 import routes from "./rutas/index";
 var cors = require('cors');
 
-
-//Declaraciones
-const app = express();
-
-const corsOptions = {
-    "origin": "*",
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "preflightContinue": false,
-    "optionsSuccessStatus": 204
-  }
-
-  app.use(cors(corsOptions));
-/*
-  app.use((req, res, next) => {
-    
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
- 
-    next();
-});
-*/
-//Rutas
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:true})) //Esto se pone para usar el body-parser
-app.use('/api',routes); // en routes se recibe la ruta de la api y se le concatena /api, ejemplo /api/algo/idAlgo. /algo/idAlgo = routes
-
-
-//Conexion a la bd
 mongoose.connect(`${process.env.URLDB}`, {
     useNewUrlParser : true,
     useCreateIndex: true,
@@ -48,6 +19,35 @@ mongoose.connect(`${process.env.URLDB}`, {
     console.log("[MONGODB] Ocurrio un error al intentar conectar la base de datos");
 })
 
+
+//Declaraciones
+const app = express();
+
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:true})) //Esto se pone para usar el body-parser
+
+app.use((req, res, next) => {
+    
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+ 
+    next();
+});
+
+  app.use('/api',routes); // en routes se recibe la ruta de la api y se le concatena /api, ejemplo /api/algo/idAlgo. /algo/idAlgo = routes
+
+/*
+
+*/
+//Rutas
+
+//Conexion a la bd
+
+
+var server = http.createServer(app);
 
 //Conectar servidor
 app.listen(process.env.PORT, () =>{
