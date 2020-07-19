@@ -10,14 +10,14 @@ export interface IPedido extends Document{
     dteFechaAlta: Date,
     dteFechaPago?: Date,
     dteFechaEntrega?: Date,
-    aJsnDetalle: IDetallePedido[];
+    aJsnDetalle?: IDetallePedido[];
 }
 
 let esquemaPedido = new Schema({
     idCliente:{
         type:mongoose.Types.ObjectId,
         required:[true, 'No se recibio el idCliente'],
-        ref: 'Cliente'
+        ref: 'cliente'
     },
     nmbMonto:{
         type:Number,
@@ -36,7 +36,8 @@ let esquemaPedido = new Schema({
     dteFechaPago:Date,
     dteFechaEntrega:Date,
     
-    aJsnDetalle:[DetalleModel.schema]
-})
+    aJsnDetalle:[DetalleModel.schema]},
+    {collection: "pedido"}
+)
 
 export default model <IPedido>('pedido', esquemaPedido);

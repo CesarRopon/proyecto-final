@@ -9,6 +9,10 @@ var esquemaTamanio = new mongoose_1.Schema({
     nmbCosto: {
         type: Number,
         required: [true, 'Se necesita saber el precio por tamaño']
+    },
+    blnActivo: {
+        type: Boolean,
+        default: true
     }
 });
 exports.default = mongoose_1.model('tamanio', esquemaTamanio);

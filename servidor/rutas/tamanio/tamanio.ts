@@ -131,3 +131,5 @@ app.delete('/tamanios/:idTamanio',(req:Request, res:Response)=>{
     })
 })
 
+export {app}
+

@@ -15,7 +15,7 @@ app.post('/clientes/:idCliente/ubicaciones', (req:Request, res:Response) =>{
     ClienteModel.findByIdAndUpdate(idCliente, {$push: {aJsnUbicacion: ubicacion} }).then((cliente: ICliente | null)=>{
         if(!cliente){
             return res.status(404).json({
-                msg:"La persona a la que desea agregar ubicacion nose encuentra.",
+                msg:"La persona a la que desea agregar ubicacion no se encuentra.",
                 cont:{
                     cliente
                 }

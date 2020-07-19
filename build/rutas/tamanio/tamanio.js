@@ -3,9 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.app = void 0;
 var express_1 = require("express");
 var tamanio_model_1 = __importDefault(require("../../modelos/tamanio.model"));
 var app = express_1.Router();
+exports.app = app;
 app.get('/tamanios', function (req, res) {
     tamanio_model_1.default.find().then(function (tamanios) {
         if (tamanios.length <= 0) {

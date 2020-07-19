@@ -36,6 +36,7 @@ var esquemaDetallePedido = new mongoose_1.Schema({
         required: [true, 'No se recibio el idEspecialidad'],
         ref: 'especialidad'
     },
-    modelo: String
+    strModelo: String,
+    strComentarios: String
 });
 exports.default = mongoose_1.model('detalle', esquemaDetallePedido);

@@ -20,19 +20,19 @@ let esquemaAdmin = new Schema({
     },
     strPassword:{
         type:String,
-        required:[true, 'Se necesita Email']
+        required:[true, 'Se necesita pass']
     },
     strNombre:{
         type:String,
-        required:[true, 'Se necesita Email']
+        required:[true, 'Se necesita nombre']
     },
     strApellidos:{
         type:String,
-        required:[true, 'Se necesita Email']
+        required:[true, 'Se necesita apellidos']
     },
     strTelefono:{
         type:String,
-        required:[true, 'Se necesita Email']
+        required:[true, 'Se necesita telefono']
     },
     nmbLatitud: Number,
     nmbLongitud:Number},

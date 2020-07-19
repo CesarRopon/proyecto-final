@@ -28,7 +28,7 @@ var esquemaPedido = new mongoose_1.Schema({
     idCliente: {
         type: mongoose_1.default.Types.ObjectId,
         required: [true, 'No se recibio el idCliente'],
-        ref: 'Cliente'
+        ref: 'cliente'
     },
     nmbMonto: {
         type: Number,
@@ -47,5 +47,5 @@ var esquemaPedido = new mongoose_1.Schema({
     dteFechaPago: Date,
     dteFechaEntrega: Date,
     aJsnDetalle: [detallePedido_model_1.default.schema]
-});
+}, { collection: "pedido" });
 exports.default = mongoose_1.model('pedido', esquemaPedido);

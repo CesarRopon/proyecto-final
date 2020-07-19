@@ -1,14 +1,15 @@
 import mongoose, {Schema, Document, model} from 'mongoose';
-/*import ProductoModel, {IProducto} from '../modelos/producto.model';
-import TamanioModel, {ITamanio} from '../modelos/tamanio.model';
-import EspecialidadModel,{IEspecialidad} from '../modelos/especialidad.model';
-*/
+
+
+
 
 export interface IDetallePedido extends Document{
     idProducto: string;
     idTamanio: string;
     idEspecialidad: string;
     modelo?: string;
+    strComentarios: string,
+   
 }
 
 let esquemaDetallePedido  = new Schema({
@@ -28,7 +29,8 @@ let esquemaDetallePedido  = new Schema({
         required:[true, 'No se recibio el idEspecialidad'],
         ref: 'especialidad'
     },
-    modelo:String
+    strModelo:String,
+    strComentarios: String  
 })
 
 export default model <IDetallePedido>('detalle', esquemaDetallePedido);
