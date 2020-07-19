@@ -20,7 +20,7 @@ app.post('/clientes/:idCliente/ubicaciones', function (req, res) {
                 }
             });
         }
-        return res.status(500).json({
+        return res.status(200).json({
             msg: "Ubicacion agregada",
             cont: {
                 cliente: cliente

@@ -21,7 +21,7 @@ app.post('/clientes/:idCliente/ubicaciones', (req:Request, res:Response) =>{
                 }
             })
         }
-        return res.status(500).json({
+        return res.status(200).json({
             msg:"Ubicacion agregada",
             cont:{
                 cliente
