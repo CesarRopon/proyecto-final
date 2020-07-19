@@ -7,9 +7,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var admin_1 = require("../rutas/admin/admin");
 var cliente_1 = require("../rutas/cliente/cliente");
+var ubicacionCliente_1 = require("../rutas/ubicacionCliente/ubicacionCliente");
 //decalraciones
 var routes = express_1.default();
 //middlewares
 routes.use(cliente_1.app);
 routes.use(admin_1.app);
+routes.use(ubicacionCliente_1.app);
 exports.default = routes;
