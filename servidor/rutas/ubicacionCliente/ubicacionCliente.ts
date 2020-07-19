@@ -10,7 +10,7 @@ app.post('/clientes/:idCliente/ubicaciones', (req:Request, res:Response) =>{
 
     let idCliente: string = req.params.idCliente;
 
-    let ubicacion: IUbicacion = new UbicacionModel(req.body);
+    let ubicacion: IUbicacion = req.body;
 
     ClienteModel.findByIdAndUpdate(idCliente, {$push: {aJsnUbicacion: ubicacion} }).then((cliente: ICliente | null)=>{
         if(!cliente){

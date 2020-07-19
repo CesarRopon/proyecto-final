@@ -7,6 +7,7 @@ const  app: Router = Router();
 
 
 //
+
 app.get('/admin', (req:Request, res:Response) =>{
 
     AdminModel.find().then((persona: IAdmin[]) =>{
@@ -50,13 +51,13 @@ app.post('/admin', (req: Request, res:Response) =>{
 app.put('/admin/:idAdmin', (req: Request, res: Response) =>{
     let idAdmin: string = req.params.idAdmin;
 
-    let admin: IAdmin = new AdminModel(req.body);
+    let admin: IAdmin = req.body;
     admin._id = idAdmin;
 
     AdminModel.findByIdAndUpdate(idAdmin, {$set: admin}).then((newPersona: IAdmin | null) =>{
         if(!newPersona){
             return res.status(404).json({
-                msg:"No se encontro el id"+ idAdmin
+                msg:"No se encontro el id "+ idAdmin
             })
         }
         let{strNombre, strApellidos} = newPersona;

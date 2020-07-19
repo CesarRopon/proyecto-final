@@ -39,25 +39,5 @@ let esquemaAdmin = new Schema({
     {collection: "admin"}
     
 )
-/*
-    strEmail: {
-        type:String,
-        required:[true, 'No se especifico un email']
-    },
-    strPassword: {
-        type:String,
-        required:[true, 'No se especifico contraseña']
-    },
-    strNombre: {
-        type:String,
-        required:[true, 'No se especifico nombre(s)']
-    },
-    strApellidos: {
-        type:String,
-        required:[true, 'No se especificaron apellidos']
-    },
-    nmbLatitud: Number,
-    nmbLongitud:Number},
-    {collection: "admin"}*/ 
 
 export default model <IAdmin>('admin', esquemaAdmin);

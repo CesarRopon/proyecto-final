@@ -46,12 +46,12 @@ app.post('/admin', function (req, res) {
 });
 app.put('/admin/:idAdmin', function (req, res) {
     var idAdmin = req.params.idAdmin;
-    var admin = new admin_model_1.default(req.body);
+    var admin = req.body;
     admin._id = idAdmin;
     admin_model_1.default.findByIdAndUpdate(idAdmin, { $set: admin }).then(function (newPersona) {
         if (!newPersona) {
             return res.status(404).json({
-                msg: "No se encontro el id" + idAdmin
+                msg: "No se encontro el id " + idAdmin
             });
         }
         var strNombre = newPersona.strNombre, strApellidos = newPersona.strApellidos;

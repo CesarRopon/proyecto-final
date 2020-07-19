@@ -26,24 +26,4 @@ var esquemaAdmin = new mongoose_1.Schema({
     nmbLatitud: Number,
     nmbLongitud: Number
 }, { collection: "admin" });
-/*
-    strEmail: {
-        type:String,
-        required:[true, 'No se especifico un email']
-    },
-    strPassword: {
-        type:String,
-        required:[true, 'No se especifico contraseña']
-    },
-    strNombre: {
-        type:String,
-        required:[true, 'No se especifico nombre(s)']
-    },
-    strApellidos: {
-        type:String,
-        required:[true, 'No se especificaron apellidos']
-    },
-    nmbLatitud: Number,
-    nmbLongitud:Number},
-    {collection: "admin"}*/
 exports.default = mongoose_1.model('admin', esquemaAdmin);
