@@ -19,6 +19,11 @@ const routes = express();
 routes.use(cliente);
 routes.use(admin);
 routes.use(ubicacionCliente);
+routes.use(detalle);
+routes.use(especialidad);
+routes.use(pedido);
+routes.use(producto);
+routes.use(tamanio);
 
 
 

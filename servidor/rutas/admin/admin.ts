@@ -17,8 +17,10 @@ app.get('/admin', (req:Request, res:Response) =>{
                 persona
             }
         })
-    }).catch(()=>{
-
+    }).catch((err: any)=>{
+        return res.status(500).json({
+            mensaje: err
+        })
     })
 
 })
@@ -75,6 +77,30 @@ app.put('/admin/:idAdmin', (req: Request, res: Response) =>{
             }
         })
     })
+})
+
+//get especifico by email
+app.get('/admin/:strEmail', (req:Request, res:Response) =>{
+
+    let strEmail: string = req.params.strEmail;
+    AdminModel.findOne({'strEmail': strEmail}).then((persona: IAdmin| null) =>{
+        if(persona!=null){
+        return res.status(200).json({
+            mensaje: "Todo bien, todo correcto",
+            contenido:{
+                persona
+            }
+        })
+    }
+    return res.status(404).json({
+        msg:"Usuario no encontrado"
+    })
+    }).catch((err: any)=>{
+        return res.status(500).json({
+            mensaje: err
+        })
+    })
+
 })
 /*
 metodo post para autenticacion de admin

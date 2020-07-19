@@ -13,7 +13,10 @@ app.get('/clientes', function (req, res) {
     cliente_model_1.default.find().then(function (cliente) {
         if (cliente.length <= 0) {
             return res.status(404).json({
-                msg: "No se encontraron datos"
+                msg: "No se encontraron datos",
+                cont: {
+                    cliente: cliente
+                }
             });
         }
         return res.status(200).json({

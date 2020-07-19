@@ -9,7 +9,10 @@ app.get ('/clientes',  (req:Request, res: Response) =>{
     clienteModel.find().then((cliente:ICliente[]) =>{
         if(cliente.length <=0){
             return res.status(404).json({
-                msg:"No se encontraron datos"
+                msg:"No se encontraron datos",
+                cont:{
+                    cliente
+                }
             })
         }
         return res.status(200).json({
