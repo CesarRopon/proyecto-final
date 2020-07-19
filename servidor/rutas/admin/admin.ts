@@ -83,7 +83,7 @@ app.put('/admin/:idAdmin', (req: Request, res: Response) =>{
 app.get('/admin/:strEmail', (req:Request, res:Response) =>{
 
     let strEmail: string = req.params.strEmail;
-    AdminModel.findOne({'strEmail': strEmail}).then((persona: IAdmin| null) =>{
+    AdminModel.find({'strEmail': strEmail}).then((persona: IAdmin[]) =>{
         if(persona!=null){
         return res.status(200).json({
             mensaje: "Todo bien, todo correcto",

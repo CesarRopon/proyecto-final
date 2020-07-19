@@ -76,7 +76,7 @@ app.put('/admin/:idAdmin', function (req, res) {
 //get especifico by email
 app.get('/admin/:strEmail', function (req, res) {
     var strEmail = req.params.strEmail;
-    admin_model_1.default.findOne({ 'strEmail': strEmail }).then(function (persona) {
+    admin_model_1.default.find({ 'strEmail': strEmail }).then(function (persona) {
         if (persona != null) {
             return res.status(200).json({
                 mensaje: "Todo bien, todo correcto",
