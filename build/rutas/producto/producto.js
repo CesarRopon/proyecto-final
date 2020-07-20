@@ -35,8 +35,8 @@ app.get('/productos', function (req, res) {
 });
 app.get('/productos/:idProducto', function (req, res) {
     var idProducto = req.params.idProducto;
-    producto_model_1.default.findById(idProducto).then(function (producto) {
-        if (!producto) {
+    producto_model_1.default.find({ '_id': idProducto }).then(function (producto) {
+        if (producto.length <= 0) {
             return res.status(404).json({
                 msg: "No hay productos",
                 contenido: {
@@ -50,11 +50,11 @@ app.get('/productos/:idProducto', function (req, res) {
                 producto: producto
             }
         });
-    }).catch(function (err) {
+    }).catch(function (producto) {
         return res.status(500).json({
             msg: "Error interno",
             contenido: {
-                err: err
+                producto: producto
             }
         });
     });

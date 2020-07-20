@@ -35,8 +35,8 @@ app.get('/productos', (req:Request, res:Response) =>{
 app.get('/productos/:idProducto', (req:Request, res:Response) =>{
 
     let idProducto :string = req.params.idProducto;
-    productoModel.findById(idProducto).then((producto: IProducto | null) =>{
-        if(!producto){
+    productoModel.find({'_id': idProducto}).then((producto: IProducto[]) =>{
+        if(producto.length<=0){
            return res.status(404).json({
                msg:"No hay productos",
                contenido:{
@@ -50,11 +50,11 @@ app.get('/productos/:idProducto', (req:Request, res:Response) =>{
                 producto
             }
         })
-    }).catch((err: any) =>{
+    }).catch((producto: any) =>{
         return res.status(500).json({
             msg:"Error interno",
             contenido: {
-                err
+                producto
             }
         })
     })
