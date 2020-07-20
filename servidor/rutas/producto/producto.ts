@@ -8,8 +8,8 @@ const app :Router = Router();
 app.get('/productos', (req:Request, res:Response) =>{
 
     productoModel.find({blnActivo:true}).then((producto: IProducto[]) =>{
-        if(producto.length<=0){
-           return res.status(404).json({
+        if(producto.length===0){
+           return res.json({
                msg:"No hay",
                contenido:{
                    producto

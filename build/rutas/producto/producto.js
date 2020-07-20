@@ -10,8 +10,8 @@ var app = express_1.Router();
 exports.app = app;
 app.get('/productos', function (req, res) {
     producto_model_1.default.find({ blnActivo: true }).then(function (producto) {
-        if (producto.length <= 0) {
-            return res.status(404).json({
+        if (producto.length === 0) {
+            return res.json({
                 msg: "No hay",
                 contenido: {
                     producto: producto
