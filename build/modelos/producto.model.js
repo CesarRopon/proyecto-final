@@ -2,6 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
 var esquemaProducto = new mongoose_1.Schema({
+    strNombre: {
+        type: String,
+        required: [true, 'Se necesita nombre']
+    },
     strDescripcion: {
         type: String,
         required: [true, 'Debe haber descripcion']

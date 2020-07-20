@@ -9,7 +9,7 @@ var producto_model_1 = __importDefault(require("../../modelos/producto.model"));
 var app = express_1.Router();
 exports.app = app;
 app.get('/productos', function (req, res) {
-    producto_model_1.default.find().then(function (producto) {
+    producto_model_1.default.find({ blnActivo: true }).then(function (producto) {
         if (producto.length <= 0) {
             return res.status(404).json({
                 msg: "No hay",
@@ -113,8 +113,8 @@ app.post('/productos/:idProducto', function (req, res) {
     });
 });
 app.delete('/productos/:idProducto', function (req, res) {
-    var newProd = req.body;
-    new producto_model_1.default(newProd).save().then(function (producto) {
+    var idProducto = req.params.idProducto;
+    producto_model_1.default.findByIdAndUpdate(idProducto, { blnActivo: false }).then(function (producto) {
         if (!producto) {
             return res.status(404).json({
                 msg: "Intentalo de nuevo",
@@ -124,16 +124,16 @@ app.delete('/productos/:idProducto', function (req, res) {
             });
         }
         return res.status(200).json({
-            msg: "Datos encontrados",
+            msg: "Dado de baja",
             contenido: {
                 producto: producto
             }
         });
-    }).catch(function (err) {
+    }).catch(function (producto) {
         return res.status(500).json({
             msg: "Error interno",
             contenido: {
-                err: err
+                producto: producto
             }
         });
     });
