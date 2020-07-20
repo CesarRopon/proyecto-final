@@ -6,6 +6,7 @@ export interface IProducto extends Document{
     strDescripcion:string;
     strImg:string;
     blnActivo: boolean;
+    nmbCosto: number
 }
 let esquemaProducto = new Schema({
     strDescripcion: {
@@ -19,6 +20,11 @@ let esquemaProducto = new Schema({
     blnActivo: {
         type: Boolean,
         default: true
+    },
+
+    nmbCosto:{
+        type:Number, 
+        required:[true, 'Debes de poner un precio']
     }
 }, 
     {collection: "producto"}

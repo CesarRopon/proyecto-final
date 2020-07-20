@@ -13,6 +13,10 @@ var esquemaProducto = new mongoose_1.Schema({
     blnActivo: {
         type: Boolean,
         default: true
+    },
+    nmbCosto: {
+        type: Number,
+        required: [true, 'Debes de poner un precio']
     }
 }, { collection: "producto" });
 exports.default = mongoose_1.model('producto', esquemaProducto);
