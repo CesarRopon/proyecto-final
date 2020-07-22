@@ -1,5 +1,6 @@
 import mongoose, {Schema, model,Document} from 'mongoose';
 import ubicacionModel ,{IUbicacion} from '../modelos/ubicacionCliente.model'; 
+import comentarioModel,{ IComentario } from './comentario.model';
 
 export interface ICliente extends Document{
     strEmail: string;
@@ -9,6 +10,7 @@ export interface ICliente extends Document{
     strApellidos: string;
     strTelefono: string;
     aJsnUbicacion?:IUbicacion[];
+    aJsnComentario?: IComentario[];
 }
 
 let esquemaCliente = new Schema ({
@@ -36,7 +38,8 @@ let esquemaCliente = new Schema ({
         type:Boolean,
         default:true
     },
-    aJsnUbicacion:[ubicacionModel.schema]
+    aJsnUbicacion:[ubicacionModel.schema],
+    aJsnComentario:[comentarioModel.schema],
 }, {collection: "cliente"}
 )
 

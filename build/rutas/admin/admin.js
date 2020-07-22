@@ -76,8 +76,8 @@ app.put('/admin/:idAdmin', function (req, res) {
 //get especifico by email
 app.get('/admin/:strEmail', function (req, res) {
     var strEmail = req.params.strEmail;
-    admin_model_1.default.find({ 'strEmail': strEmail }).then(function (persona) {
-        if (persona != null) {
+    admin_model_1.default.find({ strEmail: strEmail }).then(function (persona) {
+        if (persona.length > 0) {
             return res.status(200).json({
                 mensaje: "Todo bien, todo correcto",
                 contenido: {
@@ -85,7 +85,7 @@ app.get('/admin/:strEmail', function (req, res) {
                 }
             });
         }
-        return res.status(404).json({
+        return res.json({
             msg: "Usuario no encontrado"
         });
     }).catch(function (err) {

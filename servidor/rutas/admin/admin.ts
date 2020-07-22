@@ -83,8 +83,8 @@ app.put('/admin/:idAdmin', (req: Request, res: Response) =>{
 app.get('/admin/:strEmail', (req:Request, res:Response) =>{
 
     let strEmail: string = req.params.strEmail;
-    AdminModel.find({'strEmail': strEmail}).then((persona: IAdmin[]) =>{
-        if(persona!=null){
+    AdminModel.find({strEmail: strEmail}).then((persona: IAdmin[]) =>{
+        if(persona.length>0){
         return res.status(200).json({
             mensaje: "Todo bien, todo correcto",
             contenido:{
@@ -92,7 +92,7 @@ app.get('/admin/:strEmail', (req:Request, res:Response) =>{
             }
         })
     }
-    return res.status(404).json({
+    return res.json({
         msg:"Usuario no encontrado"
     })
     }).catch((err: any)=>{

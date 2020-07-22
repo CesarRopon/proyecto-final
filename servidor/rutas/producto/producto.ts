@@ -147,13 +147,4 @@ app.delete('/productos/:idProducto', (req:Request, res:Response) =>{
 })
 
 
-
-
-
-
-
-
-
-
-
 export {app}
