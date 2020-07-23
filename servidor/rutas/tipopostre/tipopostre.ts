@@ -57,9 +57,29 @@ app.get('/tipospostre/:idTipo', (req:Request, res:Response ) =>{
 app.put('/tipospostre/:idTipo', (req: Request, res: Response) =>{
     let idTipo :string = req.params.idTipo;
     let typeUdated: ITipoPostre = req.body;
-
+    
     tipoPostreModel.findByIdAndUpdate(idTipo, {$set: typeUdated}).then((tipo: ITipoPostre | null) =>{
-
+        if(!tipo){
+            return res.status(404).json({
+                mensaje:"No encontrado",
+                contenido:{
+                    tipo
+                }
+            })
+        }
+        return res.status(200).json({
+            mensaje:"Documento actualizado",
+            contenido:{
+                tipo
+            }
+        })
+    }).catch((err:any) =>{
+        return res.status(500).json({
+            mensaje:"Error interno",
+            contenido:{
+                err
+            }
+        })
     })
 
 })

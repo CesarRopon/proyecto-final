@@ -56,6 +56,27 @@ app.put('/tipospostre/:idTipo', function (req, res) {
     var idTipo = req.params.idTipo;
     var typeUdated = req.body;
     tipoPostre_model_1.default.findByIdAndUpdate(idTipo, { $set: typeUdated }).then(function (tipo) {
+        if (!tipo) {
+            return res.status(404).json({
+                mensaje: "No encontrado",
+                contenido: {
+                    tipo: tipo
+                }
+            });
+        }
+        return res.status(200).json({
+            mensaje: "Documento actualizado",
+            contenido: {
+                tipo: tipo
+            }
+        });
+    }).catch(function (err) {
+        return res.status(500).json({
+            mensaje: "Error interno",
+            contenido: {
+                err: err
+            }
+        });
     });
 });
 app.post('/tipospostre', function (req, res) {
