@@ -1,8 +1,9 @@
 import {model, Document, Schema} from 'mongoose';
 
 export interface ITipoPostre extends Document{
-    strDescripcion:string,
-    nmbCosto?: number
+    strDescripcion:string;
+    nmbCosto?: number;
+    blnActivo: boolean;
 }
 
 let schemaTipoPostre = new Schema({
@@ -11,7 +12,14 @@ let schemaTipoPostre = new Schema({
         type:String,
         required: [true, 'Descripcion de tipoPostreNecesaria']
     },
-    nmbCosto: Number},
+    nmbCosto: {
+        type: Number,
+        default:0
+    },
+    blnActivo: {
+        type: Boolean,
+        default: true
+    }},
     {collection: 'tipopostre'}
 )
 
