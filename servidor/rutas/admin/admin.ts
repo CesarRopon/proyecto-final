@@ -56,17 +56,20 @@ app.put('/admin/:idAdmin', (req: Request, res: Response) =>{
     let admin: IAdmin = req.body;
     admin._id = idAdmin;
 
-    AdminModel.findByIdAndUpdate(idAdmin, {$set: admin}).then((newPersona: IAdmin | null) =>{
-        if(!newPersona){
+    AdminModel.findByIdAndUpdate(idAdmin, {$set: admin}).then((admin: IAdmin | null) =>{
+        if(!admin){
             return res.status(404).json({
-                msg:"No se encontro el id "+ idAdmin
+                mensaje:"No se encontro el id "+ idAdmin,
+                contenido:{
+                    admin
+                }
             })
         }
-        let{strNombre, strApellidos} = newPersona;
+        let{strNombre, strApellidos} = admin;
         return res.status(200).json({
             msg: `se actualizo corectamente el usuario ${strNombre} ${strApellidos}`,
             cont:{
-                newPersona
+                admin
             }
         })
     }).catch((err:any) =>{
@@ -78,6 +81,8 @@ app.put('/admin/:idAdmin', (req: Request, res: Response) =>{
         })
     })
 })
+
+
 
 //get especifico by email
 app.get('/admin/:strEmail', (req:Request, res:Response) =>{
