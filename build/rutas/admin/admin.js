@@ -54,7 +54,7 @@ app.put('/admin/:idAdmin', function (req, res) {
     admin_model_1.default.findByIdAndUpdate(idAdmin, { $set: admin }).then(function (admin) {
         if (!admin) {
             return res.status(404).json({
-                mensaje: "No se encontro el id " + idAdmin,
+                mensaje: "No se encontro el id",
                 contenido: {
                     admin: admin
                 }
