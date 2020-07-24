@@ -62,7 +62,7 @@ app.put('/admin/:idAdmin', function (req, res) {
         }
         var strNombre = admin.strNombre, strApellidos = admin.strApellidos;
         return res.status(200).json({
-            msg: "se actualizo corectamente el usuario " + strNombre + " " + strApellidos,
+            mensaje: "se actualizo corectamente el usuario " + strNombre + " " + strApellidos,
             cont: {
                 admin: admin
             }
@@ -94,6 +94,32 @@ app.get('/admin/:strEmail', function (req, res) {
     }).catch(function (err) {
         return res.status(500).json({
             mensaje: err
+        });
+    });
+});
+app.get('/admins/:idAdmin', function (req, res) {
+    var idAdmin = req.params.idAdmin;
+    admin_model_1.default.findById(idAdmin).then(function (admin) {
+        if (!admin) {
+            return res.json({
+                mensaje: "No se encontro",
+                contenido: {
+                    admin: admin
+                }
+            });
+        }
+        return res.json({
+            msg: "Usuario no encontrado",
+            contenido: {
+                admin: admin
+            }
+        });
+    }).catch(function (err) {
+        return res.status(500).json({
+            mensaje: 'Error interno',
+            contenido: {
+                err: err
+            }
         });
     });
 });

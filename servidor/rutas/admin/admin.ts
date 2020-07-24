@@ -67,7 +67,7 @@ app.put('/admin/:idAdmin', (req: Request, res: Response) =>{
         }
         let{strNombre, strApellidos} = admin;
         return res.status(200).json({
-            msg: `se actualizo corectamente el usuario ${strNombre} ${strApellidos}`,
+            mensaje: `se actualizo corectamente el usuario ${strNombre} ${strApellidos}`,
             cont:{
                 admin
             }
@@ -103,6 +103,35 @@ app.get('/admin/:strEmail', (req:Request, res:Response) =>{
     }).catch((err: any)=>{
         return res.status(500).json({
             mensaje: err
+        })
+    })
+
+})
+
+app.get('/admins/:idAdmin', (req:Request, res:Response) =>{
+
+    let idAdmin: string = req.params.idAdmin;
+    AdminModel.findById(idAdmin).then((admin: IAdmin | null) =>{
+        if(!admin){
+        return res.json({
+            mensaje: "No se encontro",
+            contenido:{
+                admin
+            }
+        })
+    }
+    return res.json({
+        msg:"Usuario no encontrado",
+        contenido: {
+            admin
+        }
+    })
+    }).catch((err: any)=>{
+        return res.status(500).json({
+            mensaje: 'Error interno',
+            contenido:{
+                   err 
+            }
         })
     })
 
