@@ -7,7 +7,7 @@ import { model } from 'mongoose';
 const app : Router = Router();
 
 //Traer todos los comentarios
-app.get('/comentarios', (req:Request, res:Response) =>{
+/*app.get('/comentarios', (req:Request, res:Response) =>{
 
     comentarioModel.find().then((comentarios: IComentario[]) =>{
         if(comentarios.length===0){
@@ -30,7 +30,7 @@ app.get('/comentarios', (req:Request, res:Response) =>{
                }
            }) 
     })
-})
+})*/
 
 
 //Obtener comentarios por idCLiente y fecha
@@ -39,7 +39,7 @@ app.get('/clientes/:idCliente/comentarios/:dteFecha', (req:Request, res:Response
     let fecha: string = req.params.dteFecha;
 
     
-    clienteModel.find({'aJsnComentario.dteFechaComentario':fecha , _id:idCliente}).select('aJsnComentario.dteFechaComentario aJsnComentario.strComentario aJsnComentario.blnStatus -_id').then((comentariosCliente: ICliente[]) =>{
+    clienteModel.find({'aJsnComentario.dteFechaComentario':fecha , _id:idCliente}).select('aJsnComentario.dteFechaComentario aJsnComentario.strComentario aJsnComentario.blnStatus').then((comentariosCliente: ICliente[]) =>{
         if(comentariosCliente.length===0){
             return res.status(400).json({
                 mensaje:"No hay comentarios",
@@ -61,6 +61,37 @@ app.get('/clientes/:idCliente/comentarios/:dteFecha', (req:Request, res:Response
                    err
                }
            }) 
+    })
+})
+
+
+//Obtener todos los comentarios
+
+app.get('/clientes/:idCliente/comentarios/', (req:Request, res: Response) =>{
+    let idCliente:string = req.params.idCliente
+
+    comentarioModel.find({blnStatus:true, idCliente:idCliente}).select('idCliente dteFechaComentario strComentario blnStatus').then((comentariosCliente: IComentario[]) =>{
+        if(comentariosCliente.length===0){
+            return res.json({
+                mensaje: "No hay comentarios",
+                contenido:{
+                    comentariosCliente
+                }
+            })
+        }
+    return res.status(200).json({
+        mensaje:"Comentarios encontrados",
+        contenido:{
+            comentariosCliente
+        }
+    })
+    }).catch((err:any) =>{
+        res.status(500).json({
+            mensaje: "Error del servidor",
+            contenido:{       
+                err      
+            }
+        })
     })
 })
 

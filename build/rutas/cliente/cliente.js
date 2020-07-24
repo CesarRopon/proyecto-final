@@ -35,7 +35,7 @@ app.get('/clientes', function (req, res) {
     });
 });
 //Obtener Especifico
-app.get('/clientes/:idClientes', function (req, res) {
+app.get('/clientes/:idCliente', function (req, res) {
     var idCliente = req.params.idCliente;
     cliente_model_1.default.findById(idCliente).then(function (cliente) {
         if (!cliente) {

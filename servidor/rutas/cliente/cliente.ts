@@ -32,7 +32,7 @@ app.get ('/clientes',  (req:Request, res: Response) =>{
 })
 
 //Obtener Especifico
-app.get('/clientes/:idClientes',  (req: Request, res: Response)=>{
+app.get('/clientes/:idCliente',  (req: Request, res: Response)=>{
     let idCliente: string = req.params.idCliente;
     clienteModel.findById(idCliente).then((cliente:ICliente | null) =>{
         if(!cliente){
@@ -153,5 +153,6 @@ app.put('/clientes/:idCliente', (req:Request, res:Response) =>{
         })
     })
 })
+
 
 export {app}

@@ -1,16 +1,21 @@
 import mongoose, {Document, model, Schema} from 'mongoose';
 
 export interface IComentario extends Document {
-
+    idCliente:string
     idAdmin ?: string,
     strComentario:string,
     strContestacion ?: string,
-    dteFechaComentario?: String,
+    dteFechaComentario: String,
     dteFechaContestacion?: String,
     blnStatus: boolean;
 }
 
 let schemaComent = new Schema({
+    idCliente:{
+        type:mongoose.Types.ObjectId,
+        required: true,
+        ref: 'cliente'
+    },
     idAmin:{
         type: mongoose.Types.ObjectId,
         ref:'admin'
@@ -27,7 +32,7 @@ let schemaComent = new Schema({
         type:Boolean,
         default:false
     },
-    strFechaContestacion :String,
+    strContestacion :String,
     dteFechaContestacion: String
 }, {collection: 'comentario'}
 )
