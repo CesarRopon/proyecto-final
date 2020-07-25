@@ -12,7 +12,7 @@ exports.app = app;
 app.get('/clientes', function (req, res) {
     cliente_model_1.default.find({ blnActivo: true }).then(function (cliente) {
         if (cliente.length === 0) {
-            return res.status(404).json({
+            return res.json({
                 mensaje: "No se encontraron clientes",
                 cliente: cliente
             });

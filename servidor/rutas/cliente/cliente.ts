@@ -8,7 +8,7 @@ app.get ('/clientes',  (req:Request, res: Response) =>{
 
     clienteModel.find({blnActivo:true}).then((cliente:ICliente[]) =>{
         if(cliente.length ===0){
-            return res.status(404).json({
+            return res.json({
                 mensaje:"No se encontraron clientes",
                 cliente
             })
