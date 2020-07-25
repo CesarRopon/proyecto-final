@@ -21,11 +21,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = __importStar(require("mongoose"));
 var esquemaDetallePedido = new mongoose_1.Schema({
-    idPedido: {
-        type: mongoose_1.default.Types.ObjectId,
-        ref: 'pedido',
-        required: true
-    },
     idProducto: {
         type: mongoose_1.default.Types.ObjectId,
         ref: 'producto'
@@ -44,5 +39,5 @@ var esquemaDetallePedido = new mongoose_1.Schema({
     },
     strModelo: String,
     strComentarios: String
-}, { collection: 'detalle' });
+});
 exports.default = mongoose_1.model('detalle', esquemaDetallePedido);

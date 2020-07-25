@@ -6,20 +6,20 @@ import { model } from 'mongoose';
 
 const app : Router = Router();
 
-//Traer todos los comentarios
-app.get('/comentarios', (req:Request, res:Response) =>{
+//Traer todos los comentarios de un cliente
+app.get('/clientes/:idCliente/comentarios', (req:Request, res:Response) =>{
 
-    
-    comentarioModel.find({blnStatus:false}).then((comentarios: IComentario[]) =>{
-    if(comentarios.length===0){
+    let idCliente: string= req.params.idCliente;
+    clienteModel.findById(idCliente).then((comentariosCliente: ICliente| null) =>{
+    if(!comentariosCliente){
         return res.json({
             mensaje: "No hay comentarios",
-            comentarios
+            comentariosCliente
         })
     }
         return res.status(202).json({
         mensaje:"Comentarios encontrados",
-        comentarios
+        comentariosCliente
         })
     }).catch((err:any) =>{
         return res.json({
@@ -27,46 +27,25 @@ app.get('/comentarios', (req:Request, res:Response) =>{
             err
         })
     } )
-    /*
-    clienteModel.find().select('strNombre strApellidos aJsnComentario').then((comentarios: ICliente[]) =>{
-        if(comentarios.length===0){
-            return res.status(400).json({
-                mensaje: "No hay comentarios",
-                comentarios
-            })    
-        }
-
-        return res.status(200).json({
-            mensaje:"Mensajes encontrados",
-            comentarios
-        })
-
-    }).catch((err: any) =>{
-           return res.status(500).json({
-               mensaje:"No encontrados",
-               contenido:{
-                   err
-               }
-           }) 
-    })*/
 })
 
 //Nuevo comentario 
-app.post('/comentarios',(req:Request, res:Response) =>{
+app.post('/clientes/:idCliente/comentarios',( req :Request, res:Response) =>{
 
+    let idCliente: string = req.params.idCliente;
     let newComment :IComentario = req.body;
     
 
-    new comentarioModel(newComment).save().then((nuevoComm:IComentario| null ) =>{
+    clienteModel.findByIdAndUpdate(idCliente, {$push:{aJsnComentario:newComment}}).then((nuevoComm:ICliente| null ) =>{
         if(!nuevoComm){
             return res.json({
-                mensaje: "no enviado",
+                mensaje: "No enviado",
                 nuevoComm
             })
         }
 
         return res.json({
-            mensaje: "enviado",
+            mensaje: "Enviado",
             nuevoComm
         })
     }).catch((err: any) =>{
@@ -79,38 +58,68 @@ app.post('/comentarios',(req:Request, res:Response) =>{
 
 
 
-//Obtener comentarios por  fecha
-app.get('/clientes/:idCliente/comentarios/:dteFecha', (req:Request, res:Response) =>{
+//Encontrar un comentario y contestarlo
+app.put('/clientes/:idCliente/comentarios/:idComentario', (req:Request, res:Response) =>{
     let idCliente: string = req.params.idCliente;
-    let fecha: string = req.params.dteFecha;
+    let idComentario: string = req.params.idComentario
+    let contestacion : IComentario = req.body
 
     
-    comentarioModel.find({idCliente:idCliente, dteFechaComentario:fecha}).then((comentariosCliente: IComentario[]) =>{
-        if(comentariosCliente.length===0){
+    clienteModel.findOneAndUpdate({_id:idCliente}, {'aJsnComentario._id': idComentario}).then((contestacionAdmin:ICliente | null) =>{
+        if(!contestacionAdmin){
             return res.status(400).json({
                 mensaje:"No hay comentarios",
-                contenido:{
-                    comentariosCliente
-                }
+                contestacionAdmin
+                
             })    
         }
         return res.status(200).json({
             mensaje:"Mensajes encontrados",
-            contenido: {
-                comentariosCliente
-            }
+            contestacionAdmin
         })
     }).catch((err: any) =>{
            return res.status(500).json({
                mensaje:"No encontrados",
-               contenido:{
-                   err
-               }
+                contestacionAdmin:{
+                    err
+                }
            }) 
     })
 })
 
 
+app.get('/clientes/:idCliente/comentarios/:idComentario', (req:Request, res:Response) =>{
+    
+    let idCliente: string= req.params.idCliente;
+    let idComentario : string = req.params.idComentario;
+    let posicion: number = req.body;
+    let returnComent:IComentario;
+    clienteModel.findById(idCliente,{'aJsnComentario._id': idComentario}).populate('aJsnComentario').then((comentarioCliente: ICliente | null) =>{
+        
+        
+        if(!comentarioCliente){
+            returnComent
+            return res.json({
+                mensaje:"Comentario no encontrado",
+                comentarioCliente:{
+                    returnComent
+                }
+            })    
+        }
+        returnComent = comentarioCliente.aJsnComentario[posicion];
+        return res.status(200).json({
+            mensaje:"Comentario encontrado",
+            comentarioCliente,
+            returnComent
+        })
+    }).catch((err:any) =>{
+        return res.json({
+            mensaje:"Error interno",
+            err
+        })
+    })
+})
+/*
 app.put('/comentarios/:idComentario', (req:Request, res:Response) =>{
 
     let idComentario :string = req.params.idComentario;
@@ -162,5 +171,5 @@ app.get('/clientes/:idCliente/comentarios/', (req:Request, res: Response) =>{
         })
     })
 })
-
+*/
 export {app};

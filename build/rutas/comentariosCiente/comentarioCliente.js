@@ -5,21 +5,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 var express_1 = require("express");
-var comentario_model_1 = __importDefault(require("../../modelos/comentario.model"));
+var cliente_model_1 = __importDefault(require("../../modelos/cliente.model"));
 var app = express_1.Router();
 exports.app = app;
-//Traer todos los comentarios
-app.get('/comentarios', function (req, res) {
-    comentario_model_1.default.find({ blnStatus: false }).then(function (comentarios) {
-        if (comentarios.length === 0) {
+//Traer todos los comentarios de un cliente
+app.get('/clientes/:idCliente/comentarios', function (req, res) {
+    var idCliente = req.params.idCliente;
+    cliente_model_1.default.findById(idCliente).then(function (comentariosCliente) {
+        if (!comentariosCliente) {
             return res.json({
                 mensaje: "No hay comentarios",
-                comentarios: comentarios
+                comentariosCliente: comentariosCliente
             });
         }
         return res.status(202).json({
             mensaje: "Comentarios encontrados",
-            comentarios: comentarios
+            comentariosCliente: comentariosCliente
         });
     }).catch(function (err) {
         return res.json({
@@ -27,41 +28,20 @@ app.get('/comentarios', function (req, res) {
             err: err
         });
     });
-    /*
-    clienteModel.find().select('strNombre strApellidos aJsnComentario').then((comentarios: ICliente[]) =>{
-        if(comentarios.length===0){
-            return res.status(400).json({
-                mensaje: "No hay comentarios",
-                comentarios
-            })
-        }
-
-        return res.status(200).json({
-            mensaje:"Mensajes encontrados",
-            comentarios
-        })
-
-    }).catch((err: any) =>{
-           return res.status(500).json({
-               mensaje:"No encontrados",
-               contenido:{
-                   err
-               }
-           })
-    })*/
 });
 //Nuevo comentario 
-app.post('/comentarios', function (req, res) {
+app.post('/clientes/:idCliente/comentarios', function (req, res) {
+    var idCliente = req.params.idCliente;
     var newComment = req.body;
-    new comentario_model_1.default(newComment).save().then(function (nuevoComm) {
+    cliente_model_1.default.findByIdAndUpdate(idCliente, { $push: { aJsnComentario: newComment } }).then(function (nuevoComm) {
         if (!nuevoComm) {
             return res.json({
-                mensaje: "no enviado",
+                mensaje: "No enviado",
                 nuevoComm: nuevoComm
             });
         }
         return res.json({
-            mensaje: "enviado",
+            mensaje: "Enviado",
             nuevoComm: nuevoComm
         });
     }).catch(function (err) {
@@ -70,76 +50,56 @@ app.post('/comentarios', function (req, res) {
         });
     });
 });
-//Obtener comentarios por  fecha
-app.get('/clientes/:idCliente/comentarios/:dteFecha', function (req, res) {
+//Encontrar un comentario y contestarlo
+app.put('/clientes/:idCliente/comentarios/:idComentario', function (req, res) {
     var idCliente = req.params.idCliente;
-    var fecha = req.params.dteFecha;
-    comentario_model_1.default.find({ idCliente: idCliente, dteFechaComentario: fecha }).then(function (comentariosCliente) {
-        if (comentariosCliente.length === 0) {
+    var idComentario = req.params.idComentario;
+    var contestacion = req.body;
+    cliente_model_1.default.findOneAndUpdate({ _id: idCliente }, { 'aJsnComentario._id': idComentario }).then(function (contestacionAdmin) {
+        if (!contestacionAdmin) {
             return res.status(400).json({
                 mensaje: "No hay comentarios",
-                contenido: {
-                    comentariosCliente: comentariosCliente
-                }
+                contestacionAdmin: contestacionAdmin
             });
         }
         return res.status(200).json({
             mensaje: "Mensajes encontrados",
-            contenido: {
-                comentariosCliente: comentariosCliente
-            }
+            contestacionAdmin: contestacionAdmin
         });
     }).catch(function (err) {
         return res.status(500).json({
             mensaje: "No encontrados",
-            contenido: {
+            contestacionAdmin: {
                 err: err
             }
         });
     });
 });
-app.put('/comentarios/:idComentario', function (req, res) {
-    var idComentario = req.params.idComentario;
-    var respuesta = req.body;
-    comentario_model_1.default.findByIdAndUpdate(idComentario, { $set: respuesta }).then(function (commentAnswered) {
-        if (!commentAnswered) {
-            return res.json({
-                mensaje: "Respuesta no enviada",
-            });
-        }
-        return res.status(200).json({
-            mensaje: "Comentario enviado"
-        });
-    }).catch(function (err) {
-        return res.json({
-            mensaje: err
-        });
-    });
-});
-//Obtener todos los comentarios por id
-app.get('/clientes/:idCliente/comentarios/', function (req, res) {
+app.get('/clientes/:idCliente/comentarios/:idComentario', function (req, res) {
     var idCliente = req.params.idCliente;
-    comentario_model_1.default.find({ blnStatus: true, idCliente: idCliente }).select('idCliente dteFechaComentario strComentario blnStatus').then(function (comentariosCliente) {
-        if (comentariosCliente.length === 0) {
+    var idComentario = req.params.idComentario;
+    var posicion = req.body;
+    var returnComent;
+    cliente_model_1.default.findById(idCliente, { 'aJsnComentario._id': idComentario }).populate('aJsnComentario').then(function (comentarioCliente) {
+        if (!comentarioCliente) {
+            returnComent;
             return res.json({
-                mensaje: "No hay comentarios",
-                contenido: {
-                    comentariosCliente: comentariosCliente
+                mensaje: "Comentario no encontrado",
+                comentarioCliente: {
+                    returnComent: returnComent
                 }
             });
         }
+        returnComent = comentarioCliente.aJsnComentario[posicion];
         return res.status(200).json({
-            mensaje: "Comentarios encontrados",
-            contenido: {
-                comentariosCliente: comentariosCliente
-            }
+            mensaje: "Comentario encontrado",
+            comentarioCliente: comentarioCliente,
+            returnComent: returnComent
         });
     }).catch(function (err) {
-        res.status(500).json({
-            mensaje: "Error del servidor",
-            contenido: {
-                err: err
-            }
+        return res.json({
+            mensaje: "Error interno",
+            err: err
         });
     });
 });

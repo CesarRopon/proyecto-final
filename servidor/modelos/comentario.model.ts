@@ -11,11 +11,6 @@ export interface IComentario extends Document {
 
 let schemaComent = new Schema({
 
-    idCliente:{
-        type: mongoose.Types.ObjectId,
-        required: true,
-        ref: 'cliente'
-    },
     idAdmin:{
         type: mongoose.Types.ObjectId,
         ref:'admin'
@@ -33,10 +28,8 @@ let schemaComent = new Schema({
         default:false
     },
     strContestacion :String,
-    dteFechaContestacion: String},
-    {collection: 'comentario'}
-
-)
+    dteFechaContestacion: String
+})
 
 
 export default model <IComentario>('comentario', schemaComent);
