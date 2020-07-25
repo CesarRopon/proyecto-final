@@ -6,20 +6,16 @@ const app :Router = Router();
 //Obtener General
 app.get ('/clientes',  (req:Request, res: Response) =>{
 
-    clienteModel.find().then((cliente:ICliente[]) =>{
-        if(cliente.length <=0){
+    clienteModel.find({blnActivo:true}).then((cliente:ICliente[]) =>{
+        if(cliente.length ===0){
             return res.status(404).json({
-                msg:"No se encontraron datos",
-                cont:{
-                    cliente
-                }
+                mensaje:"No se encontraron clientes",
+                cliente
             })
         }
         return res.status(200).json({
-            msg:"Datos encontrados",
-            cont:{
-                cliente
-            }
+            mensaje:"Datos encontrados",
+            cliente
         })
     }).catch((err:any) =>{
         return res.status(500).json({

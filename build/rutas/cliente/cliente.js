@@ -10,20 +10,16 @@ var app = express_1.Router();
 exports.app = app;
 //Obtener General
 app.get('/clientes', function (req, res) {
-    cliente_model_1.default.find().then(function (cliente) {
-        if (cliente.length <= 0) {
+    cliente_model_1.default.find({ blnActivo: true }).then(function (cliente) {
+        if (cliente.length === 0) {
             return res.status(404).json({
-                msg: "No se encontraron datos",
-                cont: {
-                    cliente: cliente
-                }
+                mensaje: "No se encontraron clientes",
+                cliente: cliente
             });
         }
         return res.status(200).json({
-            msg: "Datos encontrados",
-            cont: {
-                cliente: cliente
-            }
+            mensaje: "Datos encontrados",
+            cliente: cliente
         });
     }).catch(function (err) {
         return res.status(500).json({
