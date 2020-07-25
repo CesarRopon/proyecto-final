@@ -18,12 +18,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = __importStar(require("mongoose"));
-var detallePedido_model_1 = __importDefault(require("../modelos/detallePedido.model"));
 var esquemaPedido = new mongoose_1.Schema({
     idCliente: {
         type: mongoose_1.default.Types.ObjectId,
@@ -45,7 +41,6 @@ var esquemaPedido = new mongoose_1.Schema({
         required: [true, 'No se recibio fecha alta']
     },
     dteFechaPago: Date,
-    dteFechaEntrega: Date,
-    aJsnDetalle: [detallePedido_model_1.default.schema]
+    dteFechaEntrega: Date
 }, { collection: "pedido" });
 exports.default = mongoose_1.model('pedido', esquemaPedido);

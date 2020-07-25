@@ -25,6 +25,6 @@ var esquemaCliente = new mongoose_1.Schema({
     blnActivo: {
         type: Boolean,
         default: true
-    },
+    }
 }, { collection: "cliente" });
 exports.default = mongoose_1.model('cliente', esquemaCliente);

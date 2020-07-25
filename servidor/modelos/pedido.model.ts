@@ -9,8 +9,7 @@ export interface IPedido extends Document{
     blnStatus: boolean,
     dteFechaAlta: Date,
     dteFechaPago?: Date,
-    dteFechaEntrega?: Date,
-    aJsnDetalle?: IDetallePedido[];
+    dteFechaEntrega?: Date;
 }
 
 let esquemaPedido = new Schema({
@@ -34,9 +33,7 @@ let esquemaPedido = new Schema({
         required:[true, 'No se recibio fecha alta']
     },
     dteFechaPago:Date,
-    dteFechaEntrega:Date,
-    
-    aJsnDetalle:[DetalleModel.schema]},
+    dteFechaEntrega:Date},
     {collection: "pedido"}
 )
 

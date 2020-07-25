@@ -26,7 +26,7 @@ var schemaComent = new mongoose_1.Schema({
         required: true,
         ref: 'cliente'
     },
-    idAmin: {
+    idAdmin: {
         type: mongoose_1.default.Types.ObjectId,
         ref: 'admin'
     },

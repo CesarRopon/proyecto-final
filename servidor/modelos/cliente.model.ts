@@ -35,7 +35,8 @@ let esquemaCliente = new Schema ({
     blnActivo:{
         type:Boolean,
         default:true
-    },
+    }
+
 }, {collection: "cliente"}
 )
 

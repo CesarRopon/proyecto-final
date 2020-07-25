@@ -4,6 +4,7 @@ import mongoose, {Schema, Document, model} from 'mongoose';
 
 
 export interface IDetallePedido extends Document{
+    idPedido: string;
     idProducto?: string;
     idTamanio?: string;
     idEspecialidad?: string;
@@ -14,7 +15,11 @@ export interface IDetallePedido extends Document{
 
 let esquemaDetallePedido  = new Schema({
 
-
+    idPedido:{
+        type: mongoose.Types.ObjectId,
+        ref:'pedido',
+        required:true
+    },
     idProducto:{
         type:mongoose.Types.ObjectId,
         ref: 'producto'
