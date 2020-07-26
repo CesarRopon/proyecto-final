@@ -9,8 +9,6 @@ export interface ICliente extends Document{
     blnActivo: boolean;
     strApellidos: string;
     strTelefono: string;
-    aJsnUbicacion:IUbicacion[];
-    aJsnComentario:IComentario[];
 }
 
 let esquemaCliente = new Schema ({
@@ -37,11 +35,8 @@ let esquemaCliente = new Schema ({
     blnActivo:{
         type:Boolean,
         default:true
-    },
-    aJsnUbicacion:[ubicacionModel.schema],
-    aJsnComentario:[comentarioModel.schema]
-
-}, {collection: "cliente"}
+    }}, 
+    {collection: "cliente"}
 )
 
 export default model <ICliente>('cliente', esquemaCliente);

@@ -34,17 +34,13 @@ app.get('/clientes/:idCliente',  (req: Request, res: Response)=>{
         if(!cliente){
             res.status(404).json({
              msg: "No se encontro el cliente",
-             cont:{
-                 cliente
-             }  
+            cliente
             })
         }   
 
         return res.status(200).json({
             msg: "El cliente se encontro satisfactoriamente",
-            cont:{
-                cliente
-            }
+            cliente
         })
 
     }).catch((err:any) =>{

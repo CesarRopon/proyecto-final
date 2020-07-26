@@ -37,16 +37,12 @@ app.get('/clientes/:idCliente', function (req, res) {
         if (!cliente) {
             res.status(404).json({
                 msg: "No se encontro el cliente",
-                cont: {
-                    cliente: cliente
-                }
+                cliente: cliente
             });
         }
         return res.status(200).json({
             msg: "El cliente se encontro satisfactoriamente",
-            cont: {
-                cliente: cliente
-            }
+            cliente: cliente
         });
     }).catch(function (err) {
         return res.status(500).json({
