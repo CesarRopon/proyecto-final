@@ -24,7 +24,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = __importStar(require("mongoose"));
 var detallePedido_model_1 = __importDefault(require("../modelos/detallePedido.model"));
+var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+var fechaActual = new Date("Wed Jul 29 2020 13:51:43 GMT-0500");
+var fechaStr = fechaActual.getDate() + " " + meses[fechaActual.getMonth()] + " " + fechaActual.getFullYear();
 var esquemaPedido = new mongoose_1.Schema({
+    idUbicacion: {
+        type: mongoose_1.default.Types.ObjectId,
+        //required:[true, 'Se necesita idUbicacion'],
+        ref: 'ubicacion'
+    },
     idCliente: {
         type: mongoose_1.default.Types.ObjectId,
         required: [true, 'No se recibio el idCliente'],
@@ -32,20 +40,25 @@ var esquemaPedido = new mongoose_1.Schema({
     },
     nmbMonto: {
         type: Number,
-        required: [true, 'No se recibio el monto']
+        required: [true, 'No se recibio el monto'],
+        default: 0
     },
-    nmbAdelanto: Number,
-    nmbRestante: Number,
     blnStatus: {
         type: Boolean,
         default: false
     },
     dteFechaAlta: {
-        type: Date,
-        required: [true, 'No se recibio fecha alta']
+        type: String,
+        required: [true, 'No se recibio fecha alta'],
+        default: new Date("Wed Jul 29 2020 13:51:43 GMT-0500")
     },
-    dteFechaPago: Date,
+    strFechaAlta: {
+        type: String,
+        required: true,
+        default: fechaStr
+    },
     dteFechaEntrega: Date,
+    strFechaEntrega: String,
     aJsnDetallePedido: [detallePedido_model_1.default.schema]
-});
+}, { collection: 'pedido' });
 exports.default = mongoose_1.model('pedido', esquemaPedido);

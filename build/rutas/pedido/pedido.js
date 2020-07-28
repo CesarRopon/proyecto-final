@@ -1,6 +1,89 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 var express_1 = require("express");
+var pedido_model_1 = __importDefault(require("../../modelos/pedido.model"));
 var app = express_1.Router();
 exports.app = app;
+//Obtener todos los pedidos
+app.get('/pedidos', function (req, res) {
+    pedido_model_1.default.find().populate('idCliente').then(function (pedidos) {
+        if (pedidos.length === 0) {
+            return res.json({
+                mensaje: "No hay pedidos",
+                pedidos: pedidos
+            });
+        }
+        return res.status(200).json({
+            mensaje: "Pedidos encontrados",
+            pedidos: pedidos
+        });
+    }).catch(function (err) {
+        return res.json({
+            mensaje: "Error interno",
+            err: err
+        });
+    });
+});
+app.get('/pedidos/:idPedido/', function (req, res) {
+    var idPedido = req.params.idCliente;
+    pedido_model_1.default.findById(idPedido).populate('idCliente').then(function (pedidoEspecifico) {
+        if (!pedidoEspecifico) {
+            return res.json({
+                mensaje: "No se encontro el pedido",
+                pedidoEspecifico: pedidoEspecifico
+            });
+        }
+        return res.status(200).json({
+            mensaje: "Pedido encontrado",
+            pedidoEspecifico: pedidoEspecifico
+        });
+    }).catch(function (err) {
+        return res.json({
+            mensaje: "Error interno",
+            err: err
+        });
+    });
+});
+app.post('/pedidos', function (req, res) {
+    var pedido = req.body;
+    new pedido_model_1.default(pedido).save().then(function (newPedido) {
+        if (!newPedido) {
+            return res.json({
+                mensaje: "No se pudo hacer el pedido"
+            });
+        }
+        return res.json({
+            mensaje: "Pedido hecho, espera confirmacion del vendedor",
+            newPedido: newPedido
+        });
+    }).catch(function (err) {
+        return res.json({
+            mensaje: "Error en el servidor",
+            err: err
+        });
+    });
+});
+app.put('/pedidos/:idPedido', function (req, res) {
+    var idPedido = req.params.idPedido;
+    var updatePedido = req.body;
+    pedido_model_1.default.findByIdAndUpdate(idPedido, { $set: updatePedido }).then(function (pedidoUpdated) {
+        if (!pedidoUpdated) {
+            return res.json({
+                mensaje: "No se pudo actualizar el pedido"
+            });
+        }
+        return res.status(200).json({
+            mensaje: "Pedido actualizado",
+            pedidoUpdated: pedidoUpdated
+        });
+    }).catch(function (err) {
+        return res.json({
+            mensaje: "Error interno",
+            err: err
+        });
+    });
+});

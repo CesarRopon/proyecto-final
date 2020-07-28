@@ -9,7 +9,6 @@ export interface IDetallePedido extends Document{
     idEspecialidad?: string;
     modelo?: string;
     strComentarios?: string,
-   
 }
 
 let esquemaDetallePedido  = new Schema({
