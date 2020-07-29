@@ -8,7 +8,7 @@ app.get('/pedidos/:idPedido/detalles', (req:Request, res:Response) =>{
 
     let idPedido:string = req.params.idPedido;
 
-    pedidoModel.findById(idPedido).then((detallesPedido:IPedido | null) =>{
+    pedidoModel.findById(idPedido).populate('aJsnDetallePedido.idProducto').then((detallesPedido:IPedido | null) =>{
 
         if(!detallesPedido){
             return res.json({
@@ -34,7 +34,7 @@ app.post('/pedidos/:idPedido/detalles', (req:Request, res:Response) =>{
     let idPedido: string = req.params.idPedido;
     let newDetalle :IDetallePedido = req.body;
 
-    pedidoModel.findByIdAndUpdate(idPedido, {$push :{aJsnDetallePedido: newDetalle}})
+    pedidoModel.findByIdAndUpdate(idPedido, {$push :{'aJsnDetallePedido': newDetalle}})
     .then((newDetailInserted: IPedido | null) =>{
         if(!newDetailInserted){
             return res.json({

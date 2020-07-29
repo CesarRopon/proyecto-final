@@ -23,20 +23,21 @@ var mongoose_1 = __importStar(require("mongoose"));
 var esquemaDetallePedido = new mongoose_1.Schema({
     idProducto: {
         type: mongoose_1.default.Types.ObjectId,
+        required: [true, ' se necesita idProducto'],
         ref: 'producto'
     },
-    idTipoPostre: {
-        type: mongoose_1.default.Types.ObjectId,
-        ref: 'tipopostre'
-    },
-    idTamanio: {
-        type: mongoose_1.default.Types.ObjectId,
-        ref: 'tamanio'
-    },
-    idEspecialidad: {
-        type: mongoose_1.default.Types.ObjectId,
-        ref: 'especialidad'
-    },
+    /* idTipoPostre:{
+         type:mongoose.Types.ObjectId,
+         ref:'tipopostre'
+     },
+     idTamanio:{
+         type:mongoose.Types.ObjectId,
+         ref:'tamanio'
+     },
+     idEspecialidad:{
+         type:mongoose.Types.ObjectId,
+         ref: 'especialidad'
+     },*/
     strModelo: String,
     strComentarios: String
 });

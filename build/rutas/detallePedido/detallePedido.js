@@ -10,7 +10,7 @@ var app = express_1.Router();
 exports.app = app;
 app.get('/pedidos/:idPedido/detalles', function (req, res) {
     var idPedido = req.params.idPedido;
-    pedido_model_1.default.findById(idPedido).then(function (detallesPedido) {
+    pedido_model_1.default.findById(idPedido).populate('aJsnDetallePedido.idProducto').then(function (detallesPedido) {
         if (!detallesPedido) {
             return res.json({
                 mensaje: "No hay pedido"
@@ -30,7 +30,7 @@ app.get('/pedidos/:idPedido/detalles', function (req, res) {
 app.post('/pedidos/:idPedido/detalles', function (req, res) {
     var idPedido = req.params.idPedido;
     var newDetalle = req.body;
-    pedido_model_1.default.findByIdAndUpdate(idPedido, { $push: { aJsnDetallePedido: newDetalle } })
+    pedido_model_1.default.findByIdAndUpdate(idPedido, { $push: { 'aJsnDetallePedido': newDetalle } })
         .then(function (newDetailInserted) {
         if (!newDetailInserted) {
             return res.json({
