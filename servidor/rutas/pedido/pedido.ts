@@ -6,7 +6,7 @@ const app :Router = Router();
 //Obtener todos los pedidos
 app.get('/pedidos', (req:Request, res:Response) =>{
 
-    pedidoModel.find().populate('idCliente').then((pedidos : IPedido[] )=>{
+    pedidoModel.find({blnStatus:false}).populate('idCliente').then((pedidos : IPedido[] )=>{
         if(pedidos.length===0){
             return res.json({
                 mensaje:"No hay pedidos",

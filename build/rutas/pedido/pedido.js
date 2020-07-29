@@ -10,7 +10,7 @@ var app = express_1.Router();
 exports.app = app;
 //Obtener todos los pedidos
 app.get('/pedidos', function (req, res) {
-    pedido_model_1.default.find().populate('idCliente').then(function (pedidos) {
+    pedido_model_1.default.find({ blnStatus: false }).populate('idCliente').then(function (pedidos) {
         if (pedidos.length === 0) {
             return res.json({
                 mensaje: "No hay pedidos",
