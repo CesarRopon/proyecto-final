@@ -10,7 +10,7 @@ var app = express_1.Router();
 exports.app = app;
 app.get('/pedidos/:idPedido/detalles', function (req, res) {
     var idPedido = req.params.idPedido;
-    pedido_model_1.default.findById(idPedido).populate('aJsnDetallePedido.idProducto').then(function (detallesPedido) {
+    pedido_model_1.default.find({ _id: idPedido }).populate('idCliente').populate('aJsnDetallePedido.idProducto').then(function (detallesPedido) {
         if (!detallesPedido) {
             return res.json({
                 mensaje: "No hay pedido"

@@ -8,7 +8,7 @@ app.get('/pedidos/:idPedido/detalles', (req:Request, res:Response) =>{
 
     let idPedido:string = req.params.idPedido;
 
-    pedidoModel.findById(idPedido).populate('aJsnDetallePedido.idProducto').then((detallesPedido:IPedido | null) =>{
+    pedidoModel.find({_id:idPedido}).populate('idCliente').populate('aJsnDetallePedido.idProducto').then((detallesPedido:IPedido[] ) =>{
 
         if(!detallesPedido){
             return res.json({
