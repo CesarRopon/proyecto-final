@@ -61,6 +61,7 @@ app.get('/productos/:idProducto', function (req, res) {
     });
 });
 app.post('/productos', function (req, res) {
+    console.log(req.body);
     var newProd = req.body;
     var fileUpload = new fileUpload_1.FileUpload('imgProductos', ['image/jpeg', 'image/png']);
     var nombreImg;

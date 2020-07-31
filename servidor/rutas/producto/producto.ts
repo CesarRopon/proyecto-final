@@ -35,6 +35,7 @@ app.get('/productos', (req:Request, res:Response) =>{
 
 app.get('/productos/:idProducto', (req:Request, res:Response) =>{
 
+    
     let idProducto :string = req.params.idProducto;
     productoModel.find({'_id': idProducto}).then((producto: IProducto[]) =>{
         if(producto.length<=0){
@@ -63,6 +64,8 @@ app.get('/productos/:idProducto', (req:Request, res:Response) =>{
 
 app.post('/productos', (req:Request, res:Response) =>{
 
+    console.log(req.body);
+    
     let newProd :IProducto = req.body;
     let fileUpload = new FileUpload('imgProductos', ['image/jpeg', 'image/png']);
     let nombreImg:string;
@@ -72,15 +75,11 @@ app.post('/productos', (req:Request, res:Response) =>{
         try {
             nombreImg =fileUpload.subirArchivo(file);
             console.log(nombreImg);
-            
             newProd.strImg = nombreImg;
             newProd.strImg = nombreImg;
         } catch (error) {
-            console.log(error.toString());
-            
+            console.log(error.toString());     
         }
- 
-    
     }
     new productoModel(newProd).save().then((producto: IProducto) =>{
         if(!producto){
