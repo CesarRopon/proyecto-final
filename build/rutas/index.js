@@ -15,6 +15,7 @@ var producto_1 = require("../rutas/producto/producto");
 var tamanio_1 = require("../rutas/tamanio/tamanio");
 var comentarioCliente_1 = require("../rutas/comentariosCiente/comentarioCliente");
 var tipopostre_1 = require("../rutas/tipopostre/tipopostre");
+var imagen_1 = require("../rutas/imagen/imagen");
 //decalraciones
 var routes = express_1.default();
 //middlewares
@@ -28,4 +29,5 @@ routes.use(producto_1.app);
 routes.use(tamanio_1.app);
 routes.use(comentarioCliente_1.app);
 routes.use(tipopostre_1.app);
+routes.use(imagen_1.app);
 exports.default = routes;

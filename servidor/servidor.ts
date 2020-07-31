@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 var http = require('http');
 import * as bodyParser from "body-parser"; //se le pone un alias a la importacion de body-parser
 import routes from "./rutas/index";
+import * as eFileUpload from 'express-fileupload';
 var cors = require('cors');
 
 
@@ -25,9 +26,9 @@ mongoose.connect("mongodb+srv://juliocesar12345:juliocesar12345@clusterappadmin.
 //Declaraciones
 const app = express();
 
-
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:true})) //Esto se pone para usar el body-parser
+app.use(eFileUpload.default());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true})); //Esto se pone para usar el body-parser
 
 app.use((req, res, next) => {
     

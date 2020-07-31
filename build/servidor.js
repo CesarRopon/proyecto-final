@@ -29,6 +29,7 @@ var mongoose_1 = __importDefault(require("mongoose"));
 var http = require('http');
 var bodyParser = __importStar(require("body-parser")); //se le pone un alias a la importacion de body-parser
 var index_1 = __importDefault(require("./rutas/index"));
+var eFileUpload = __importStar(require("express-fileupload"));
 var cors = require('cors');
 mongoose_1.default.connect("mongodb+srv://juliocesar12345:juliocesar12345@clusterappadmin.utrfc.gcp.mongodb.net/dbadmin?retryWrites=true&w=majority", {
     useNewUrlParser: true,
@@ -42,6 +43,7 @@ mongoose_1.default.connect("mongodb+srv://juliocesar12345:juliocesar12345@cluste
 });
 //Declaraciones
 var app = express_1.default();
+app.use(eFileUpload.default());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); //Esto se pone para usar el body-parser
 app.use(function (req, res, next) {

@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 var express_1 = require("express");
 var producto_model_1 = __importDefault(require("../../modelos/producto.model"));
+var fileUpload_1 = require("../../librerias/fileUpload");
 var app = express_1.Router();
 exports.app = app;
 app.get('/productos', function (req, res) {
@@ -61,6 +62,20 @@ app.get('/productos/:idProducto', function (req, res) {
 });
 app.post('/productos', function (req, res) {
     var newProd = req.body;
+    var fileUpload = new fileUpload_1.FileUpload('imgProductos', ['image/jpeg', 'image/png']);
+    var nombreImg;
+    if (req.files) {
+        var file = req.files.strImg;
+        try {
+            nombreImg = fileUpload.subirArchivo(file);
+            console.log(nombreImg);
+            newProd.strImg = nombreImg;
+            newProd.strImg = nombreImg;
+        }
+        catch (error) {
+            console.log(error.toString());
+        }
+    }
     new producto_model_1.default(newProd).save().then(function (producto) {
         if (!producto) {
             return res.status(404).json({
@@ -77,6 +92,7 @@ app.post('/productos', function (req, res) {
             }
         });
     }).catch(function (err) {
+        fileUpload.eliminarArchivo(nombreImg);
         return res.status(500).json({
             msg: "Error interno",
             contenido: {

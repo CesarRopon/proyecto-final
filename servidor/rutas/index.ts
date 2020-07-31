@@ -12,7 +12,7 @@ import {app as producto} from '../rutas/producto/producto';
 import {app as tamanio} from '../rutas/tamanio/tamanio';
 import {app as comentarios} from '../rutas/comentariosCiente/comentarioCliente';
 import {app as tipopostre} from '../rutas/tipopostre/tipopostre';
-
+import {app as imagenes} from '../rutas/imagen/imagen';
 //decalraciones
 const routes = express();
 
@@ -28,7 +28,7 @@ routes.use(producto);
 routes.use(tamanio);
 routes.use(comentarios);
 routes.use(tipopostre);
-
+routes.use(imagenes);
 
 
 

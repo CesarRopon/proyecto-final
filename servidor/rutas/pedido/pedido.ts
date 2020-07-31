@@ -10,13 +10,15 @@ app.get('/pedidos', (req:Request, res:Response) =>{
         if(pedidos.length===0){
             return res.json({
                 mensaje:"No hay pedidos",
-                pedidos
+                pedidos,
+                mensaje2: req.get('host')
             })    
         }
 
         return res.status(200).json({
             mensaje:"Pedidos encontrados",
-            pedidos
+            pedidos,
+            mensaje2: req.get('host')
         })
     }).catch((err:any) =>{
         return res.json({
@@ -81,6 +83,7 @@ app.put('/pedidos/:idPedido', (req:Request, res:Response) =>{
         if(!pedidoUpdated){
             return res.json({
                 mensaje:"No se pudo actualizar el pedido"
+
             })
         }
 

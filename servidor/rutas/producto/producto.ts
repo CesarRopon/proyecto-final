@@ -1,6 +1,7 @@
 import {Router, Request, Response} from 'express';
 import productoModel, {IProducto} from '../../modelos/producto.model';
-
+import {UploadedFile} from 'express-fileupload';
+import {FileUpload} from '../../librerias/fileUpload';
 
 
 const app :Router = Router();
@@ -63,6 +64,24 @@ app.get('/productos/:idProducto', (req:Request, res:Response) =>{
 app.post('/productos', (req:Request, res:Response) =>{
 
     let newProd :IProducto = req.body;
+    let fileUpload = new FileUpload('imgProductos', ['image/jpeg', 'image/png']);
+    let nombreImg:string;
+    
+    if(req.files){
+        let file = req.files.strImg as UploadedFile;
+        try {
+            nombreImg =fileUpload.subirArchivo(file);
+            console.log(nombreImg);
+            
+            newProd.strImg = nombreImg;
+            newProd.strImg = nombreImg;
+        } catch (error) {
+            console.log(error.toString());
+            
+        }
+ 
+    
+    }
     new productoModel(newProd).save().then((producto: IProducto) =>{
         if(!producto){
             return res.status(404).json({
@@ -79,6 +98,7 @@ app.post('/productos', (req:Request, res:Response) =>{
              }
          })
     }).catch((err: any) =>{
+        fileUpload.eliminarArchivo(nombreImg);
         return res.status(500).json({
             msg:"Error interno",
             contenido:{
