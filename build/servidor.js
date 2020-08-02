@@ -43,9 +43,6 @@ mongoose_1.default.connect("mongodb+srv://juliocesar12345:juliocesar12345@cluste
 });
 //Declaraciones
 var app = express_1.default();
-app.use(eFileUpload.default());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); //Esto se pone para usar el body-parser
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
@@ -53,6 +50,9 @@ app.use(function (req, res, next) {
     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
 });
+app.use(eFileUpload.default());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); //Esto se pone para usar el body-parser
 app.use('/api', index_1.default); // en routes se recibe la ruta de la api y se le concatena /api, ejemplo /api/algo/idAlgo. /algo/idAlgo = routes
 /*
 

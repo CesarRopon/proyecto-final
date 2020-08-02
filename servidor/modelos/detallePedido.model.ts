@@ -1,8 +1,6 @@
 import mongoose, {Schema, Document, model} from 'mongoose';
 
 
-
-
 export interface IDetallePedido extends Document{
     idProducto?: string;
     modelo?: string;

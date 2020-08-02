@@ -64,11 +64,12 @@ app.get('/productos/:idProducto', (req:Request, res:Response) =>{
 
 app.post('/productos', (req:Request, res:Response) =>{
 
-    console.log(req.body);
+    //console.log(req.body);
     
     let newProd :IProducto = req.body;
     let fileUpload = new FileUpload('imgProductos', ['image/jpeg', 'image/png']);
     let nombreImg:string;
+    console.log(newProd);
     
     if(req.files){
         let file = req.files.strImg as UploadedFile;
@@ -77,8 +78,9 @@ app.post('/productos', (req:Request, res:Response) =>{
             console.log(nombreImg);
             newProd.strImg = nombreImg;
             newProd.strImg = nombreImg;
-        } catch (error) {
-            console.log(error.toString());     
+        } catch (error) {  
+            console.log("Hola");
+                
         }
     }
     new productoModel(newProd).save().then((producto: IProducto) =>{

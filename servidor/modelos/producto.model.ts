@@ -4,7 +4,7 @@ import mongoose,{model, Schema, Document, Collection} from 'mongoose';
 export interface IProducto extends Document{
     strNombre:string;
     strDescripcion:string;
-    strImg:string;
+    strImg?:string;
     blnActivo: boolean;
     nmbCosto: number
 }
@@ -19,7 +19,6 @@ let esquemaProducto = new Schema({
     },
     strImg:{
         type:String,
-        required: [true, 'Inserta una imagen de producto']
     },
     blnActivo: {
         type: Boolean,

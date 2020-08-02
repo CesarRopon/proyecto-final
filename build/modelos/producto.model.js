@@ -12,7 +12,6 @@ var esquemaProducto = new mongoose_1.Schema({
     },
     strImg: {
         type: String,
-        required: [true, 'Inserta una imagen de producto']
     },
     blnActivo: {
         type: Boolean,

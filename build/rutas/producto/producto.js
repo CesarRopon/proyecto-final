@@ -61,10 +61,11 @@ app.get('/productos/:idProducto', function (req, res) {
     });
 });
 app.post('/productos', function (req, res) {
-    console.log(req.body);
+    //console.log(req.body);
     var newProd = req.body;
     var fileUpload = new fileUpload_1.FileUpload('imgProductos', ['image/jpeg', 'image/png']);
     var nombreImg;
+    console.log(newProd);
     if (req.files) {
         var file = req.files.strImg;
         try {
@@ -74,7 +75,7 @@ app.post('/productos', function (req, res) {
             newProd.strImg = nombreImg;
         }
         catch (error) {
-            console.log(error.toString());
+            console.log("Hola");
         }
     }
     new producto_model_1.default(newProd).save().then(function (producto) {

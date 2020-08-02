@@ -8,9 +8,10 @@ export class FileUpload{
 
     constructor(private strRuta:string, private extensiones:string[]){}
 
-    subirArchivo(file: UploadedFile){
-        let nombreImg = Uniqid.default+Path.extname(file.name);
-
+    subirArchivo(file: UploadedFile):string{
+        let nombreImg = Uniqid.default() + Path.extname(file.name);
+        console.log(nombreImg);
+        
         if(!this.extensiones.includes(file.mimetype)){
             throw new Error("No es una extension permitida");
         }

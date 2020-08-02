@@ -29,7 +29,8 @@ var FileUpload = /** @class */ (function () {
         this.extensiones = extensiones;
     }
     FileUpload.prototype.subirArchivo = function (file) {
-        var nombreImg = Uniqid.default + Path.extname(file.name);
+        var nombreImg = Uniqid.default() + Path.extname(file.name);
+        console.log(nombreImg);
         if (!this.extensiones.includes(file.mimetype)) {
             throw new Error("No es una extension permitida");
         }
