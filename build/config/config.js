@@ -10,5 +10,3 @@ if (process.env.NODE_ENV === "dev") {
 else {
     process.env.URLDB = "mongodb+srv://juliocesar12345:juliocesar12345@clusterappadmin.utrfc.gcp.mongodb.net/dbadmin?retryWrites=true&w=majority";
 }
-process.env.SEED = process.env.SEED || '#$!1"#$FD!!/';
-process.env.CADUCIDAD_TOKEN = '3h';
