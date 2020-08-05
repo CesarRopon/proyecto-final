@@ -63,7 +63,7 @@ exports.app = void 0;
 var express_1 = require("express");
 var admin_model_1 = __importDefault(require("../../modelos/admin.model"));
 var admin_model_2 = __importDefault(require("../../modelos/admin.model"));
-var Bcrypt = __importStar(require("bcrypt"));
+var bcrypt = __importStar(require("bcryptjs"));
 //declaraciones
 var app = express_1.Router();
 exports.app = app;
@@ -91,7 +91,7 @@ app.get('/admin', function (req, res) {
 app.post('/admin', function (req, res) {
     var admin = req.body;
     //Encriptar contraseña
-    admin.strPassword = Bcrypt.hashSync(admin.strPassword, 10);
+    admin.strPassword = bcrypt.hashSync(admin.strPassword, 10);
     new admin_model_1.default(admin).save().then(function (administrador) {
         if (!administrador) {
             return res.status(404).json({
@@ -216,7 +216,7 @@ app.post('/admin/login', function (req, res) {
                 contenido: admin
             });
         }
-        Bcrypt.compare(strPassword, admin.strPassword).then(function (resp) { return __awaiter(void 0, void 0, void 0, function () {
+        bcrypt.compare(strPassword, admin.strPassword).then(function (resp) { return __awaiter(void 0, void 0, void 0, function () {
             var strNombre, strApellidos;
             return __generator(this, function (_a) {
                 if (!resp) {
@@ -254,7 +254,7 @@ app.put('/admins/changePass/:strEmail', function (req, res) {
                 mensaje: "No existe el correo"
             });
         }
-        newPass = Bcrypt.hashSync(newPass, 10);
+        newPass = bcrypt.hashSync(newPass, 10);
         admin_model_2.default.findByIdAndUpdate(admin._id, { strPassword: newPass }).then(function (passChanged) {
             if (!passChanged) {
                 return res.json({

@@ -2,7 +2,7 @@
 import express,{Router, Request,Response, response} from 'express';
 import AdminModel, {IAdmin} from '../../modelos/admin.model';
 import adminModel from '../../modelos/admin.model';
-import * as Bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 //declaraciones
 const  app: Router = Router();
@@ -38,7 +38,7 @@ app.post('/admin', (req: Request, res:Response) =>{
 
     let admin : IAdmin = req.body;
     //Encriptar contraseña
-    admin.strPassword = Bcrypt.hashSync(admin.strPassword, 10);
+    admin.strPassword = bcrypt.hashSync(admin.strPassword, 10);
     new AdminModel(admin).save().then((administrador: IAdmin)=>{
         if(!administrador){
             return res.status(404).json({
@@ -184,7 +184,7 @@ app.post('/admin/login',(req:Request, res:Response) =>{
             })
         }
 
-        Bcrypt.compare(strPassword,admin.strPassword).then(async(resp:any) =>{
+        bcrypt.compare(strPassword,admin.strPassword).then(async(resp:any) =>{
             if(!resp){
                 return res.json({
                     mensaje:"Contraseña incorrecta",
@@ -227,7 +227,7 @@ app.put('/admins/changePass/:strEmail', (req:Request, res:Response) =>{
             })
         }
 
-            newPass = Bcrypt.hashSync(newPass, 10);
+            newPass = bcrypt.hashSync(newPass, 10);
             adminModel.findByIdAndUpdate(admin._id, {strPassword:newPass}).then((passChanged: IAdmin | null) =>{
                 if(!passChanged){
                     return res.json({
