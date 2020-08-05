@@ -47,9 +47,7 @@ app.get('/tipospostre/:idTipo', (req:Request, res:Response ) =>{
         }
         return res.status(200).json({
             mensaje:"Encontrado",
-            contenido: {
-                tipo
-            }
+            contenido:tipo
         })
     })
 })
@@ -62,23 +60,17 @@ app.put('/tipospostre/:idTipo', (req: Request, res: Response) =>{
         if(!tipo){
             return res.status(404).json({
                 mensaje:"No encontrado",
-                contenido:{
-                    tipo
-                }
+                contenido:tipo
             })
         }
         return res.status(200).json({
             mensaje:"Documento actualizado",
-            contenido:{
-                tipo
-            }
+            contenido:tipo
         })
     }).catch((err:any) =>{
         return res.status(500).json({
             mensaje:"Error interno",
-            contenido:{
-                err
-            }
+            contenido:err
         })
     })
 
@@ -106,27 +98,21 @@ app.post('/tipospostre', (req:Request, res: Response) =>{
 
 app.delete('/tipospostre/:idTipo', (req: Request, res: Response) =>{
     let idTipo :string = req.params.idTipo;
-    tipoPostreModel.findByIdAndUpdate(idTipo, {blnActivo: false}).then((tipos: ITipoPostre | null) =>{
+    tipoPostreModel.findByIdAndRemove(idTipo).then((tipos: ITipoPostre | null) =>{
         if(!tipos){
             return res.status(404).json({
                 mensaje:"No eliminado",
-                contenido:{
-                    tipos
-                }
+                contenido:tipos
             })
         }
         return res.status(200).json({
             mensaje:"Dado de baja",
-            contenido:{
-                tipos
-            }
+            contenido:tipos
         })
     }).catch((err: any) =>{
         return res.status(500).json({
             mensaje:"Error interno",
-            contenido:{
-                err
-            }
+            contenido:err
         })
     })
 })

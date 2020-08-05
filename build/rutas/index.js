@@ -5,17 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var admin_1 = require("../rutas/admin/admin");
-var cliente_1 = require("../rutas/cliente/cliente");
-var ubicacionCliente_1 = require("../rutas/ubicacionCliente/ubicacionCliente");
-var detallePedido_1 = require("../rutas/detallePedido/detallePedido");
-var especialidad_1 = require("../rutas/especialidad/especialidad");
-var pedido_1 = require("../rutas/pedido/pedido");
-var producto_1 = require("../rutas/producto/producto");
-var tamanio_1 = require("../rutas/tamanio/tamanio");
-var comentarioCliente_1 = require("../rutas/comentariosCiente/comentarioCliente");
-var tipopostre_1 = require("../rutas/tipopostre/tipopostre");
-var imagen_1 = require("../rutas/imagen/imagen");
+var admin_1 = require("./admin/admin");
+var cliente_1 = require("./cliente/cliente");
+var ubicacionCliente_1 = require("./ubicacionCliente/ubicacionCliente");
+var detallePedido_1 = require("./detallePedido/detallePedido");
+var especialidad_1 = require("./especialidad/especialidad");
+var pedido_1 = require("./pedido/pedido");
+var producto_1 = require("./producto/producto");
+var tamanio_1 = require("./tamanio/tamanio");
+var comentarioCliente_1 = require("./comentariosCiente/comentarioCliente");
+var tipopostre_1 = require("./tipopostre/tipopostre");
+var imagen_1 = require("./imagen/imagen");
 //decalraciones
 var routes = express_1.default();
 //middlewares

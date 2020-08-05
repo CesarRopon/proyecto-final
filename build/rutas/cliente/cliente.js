@@ -6,27 +6,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 var express_1 = require("express");
 var cliente_model_1 = __importDefault(require("../../modelos/cliente.model"));
+var verificarToken_1 = require("../../middlewares/verificarToken");
 var app = express_1.Router();
 exports.app = app;
 //Obtener General
-app.get('/clientes', function (req, res) {
+app.get('/clientes', verificarToken_1.verificaToken, function (req, res) {
     cliente_model_1.default.find({ blnActivo: true }).then(function (cliente) {
         if (cliente.length === 0) {
             return res.json({
                 mensaje: "No se encontraron clientes",
-                cliente: cliente
+                contenido: cliente
             });
         }
         return res.status(200).json({
             mensaje: "Datos encontrados",
-            cliente: cliente
+            contenido: cliente
         });
     }).catch(function (err) {
         return res.status(500).json({
             msg: "Error al consultar datos del cliente",
-            cont: {
-                err: err
-            }
+            contenido: err
         });
     });
 });
@@ -36,20 +35,18 @@ app.get('/clientes/:idCliente', function (req, res) {
     cliente_model_1.default.findById(idCliente).then(function (cliente) {
         if (!cliente) {
             res.status(404).json({
-                msg: "No se encontro el cliente",
-                cliente: cliente
+                mensaje: "No se encontro el cliente",
+                contenido: cliente
             });
         }
         return res.status(200).json({
-            msg: "El cliente se encontro satisfactoriamente",
-            cliente: cliente
+            mensaje: "El cliente se encontro satisfactoriamente",
+            contenido: cliente
         });
     }).catch(function (err) {
         return res.status(500).json({
-            msg: "Ha habido un error",
-            cont: {
-                err: err
-            }
+            mensaje: "Ha habido un error",
+            contenido: err
         });
     });
 });
@@ -59,24 +56,18 @@ app.post('/clientes', function (req, res) {
     new cliente_model_1.default(cliente).save().then(function (cliente) {
         if (!cliente) {
             return res.status(404).json({
-                msg: "Error",
-                cont: {
-                    cliente: cliente
-                }
+                mensaje: "Error",
+                contenido: cliente
             });
         }
         return res.status(202).json({
-            msg: "Se registro el cliente exitosamente",
-            contenido: {
-                cliente: cliente
-            }
+            mensaje: "Se registro el cliente exitosamente",
+            contenido: cliente
         });
     }).catch(function (err) {
         return res.status(500).json({
-            msg: "Ha ocurrido un error al registrar el cliente",
-            contenido: {
-                err: err
-            }
+            mensaje: "Ha ocurrido un error al registrar el cliente",
+            contenido: err
         });
     });
 });
@@ -86,24 +77,18 @@ app.delete('/clientes/:idCliente', function (req, res) {
     cliente_model_1.default.findByIdAndRemove(idCliente).then(function (cliente) {
         if (!cliente) {
             return res.status(404).json({
-                msg: "No se encontro el cliente a eliminar",
-                cont: {
-                    cliente: cliente
-                }
+                mensaje: "No se encontro el cliente a eliminar",
+                contenido: cliente
             });
         }
         return res.status(200).json({
             msg: "Se elimino al cliente",
-            cont: {
-                cliente: cliente
-            }
+            contenido: cliente
         });
     }).catch(function (err) {
         return res.json(500).json({
             msg: "Ocurrio un error",
-            cont: {
-                err: err
-            }
+            contenido: err
         });
     });
 });
@@ -115,24 +100,18 @@ app.put('/clientes/:idCliente', function (req, res) {
     cliente_model_1.default.findByIdAndUpdate(idCliente, { $set: cliente }).then(function (clienteRes) {
         if (!clienteRes) {
             return res.status(404).json({
-                msg: "No se encontro el cliente",
-                cont: {
-                    clienteRes: clienteRes
-                }
+                mensaje: "No se encontro el cliente",
+                contenido: clienteRes
             });
         }
         return res.status(200).json({
-            msg: "Se actualizo satisfactoriamente",
-            cont: {
-                clienteRes: clienteRes
-            }
+            mensaje: "Se actualizo satisfactoriamente",
+            contenido: clienteRes
         });
     }).catch(function (err) {
         res.status(500).json({
-            msg: "Hubo un error",
-            cont: {
-                err: err
-            }
+            mensaje: "Hubo un error",
+            contenido: err
         });
     });
 });

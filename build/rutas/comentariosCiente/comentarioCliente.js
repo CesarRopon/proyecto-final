@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 var express_1 = require("express");
 var comentario_model_1 = __importDefault(require("../../modelos/comentario.model"));
+var verificarToken_1 = require("../../middlewares/verificarToken");
 var app = express_1.Router();
 exports.app = app;
 //Traer todos los comentarios de un cliente
@@ -50,7 +51,7 @@ app.post('/clientes/:idCliente/comentarios', function (req, res) {
     });
 });
 //Encontrar un comentario y contestarlo
-app.put('/clientes/:idCliente/comentarios/:idComentario', function (req, res) {
+app.put('/clientes/:idCliente/comentarios/:idComentario', verificarToken_1.verificaToken, function (req, res) {
     var idCliente = req.params.idCliente;
     var idComentario = req.params.idComentario;
     var contestacion = req.body;

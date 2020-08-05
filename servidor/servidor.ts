@@ -23,6 +23,7 @@ mongoose.connect("mongodb+srv://juliocesar12345:juliocesar12345@clusterappadmin.
 })
 
 
+
 //Declaraciones
 const app = express();
 

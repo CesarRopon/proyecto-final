@@ -1,28 +1,27 @@
 import {Router, Request, Response} from "express";
 import clienteModel, {ICliente} from '../../modelos/cliente.model';
+import { verificaToken } from "../../middlewares/verificarToken";
 
 const app :Router = Router();
 
 //Obtener General
-app.get ('/clientes',  (req:Request, res: Response) =>{
+app.get ('/clientes',  verificaToken, (req:Request, res: Response) =>{
 
     clienteModel.find({blnActivo:true}).then((cliente:ICliente[]) =>{
         if(cliente.length ===0){
             return res.json({
                 mensaje:"No se encontraron clientes",
-                cliente
+                contenido: cliente
             })
         }
         return res.status(200).json({
             mensaje:"Datos encontrados",
-            cliente
+            contenido: cliente
         })
     }).catch((err:any) =>{
         return res.status(500).json({
             msg: "Error al consultar datos del cliente",
-            cont:{
-                err
-            }
+            contenido:err
         });
     })
 })
@@ -33,22 +32,20 @@ app.get('/clientes/:idCliente',  (req: Request, res: Response)=>{
     clienteModel.findById(idCliente).then((cliente:ICliente | null) =>{
         if(!cliente){
             res.status(404).json({
-             msg: "No se encontro el cliente",
-            cliente
+             mensaje: "No se encontro el cliente",
+            contenido: cliente
             })
         }   
 
         return res.status(200).json({
-            msg: "El cliente se encontro satisfactoriamente",
-            cliente
+            mensaje: "El cliente se encontro satisfactoriamente",
+            contenido:cliente
         })
 
     }).catch((err:any) =>{
         return res.status(500).json({
-            msg:"Ha habido un error",
-            cont:{
-             err                
-            }
+            mensaje:"Ha habido un error",
+            contenido:err
         })
     })
 })
@@ -60,24 +57,18 @@ app.post('/clientes', (req:Request, res:Response) => {
     new clienteModel(cliente).save().then((cliente: ICliente) =>{
         if(!cliente){
             return res.status(404).json({
-                msg:"Error",
-                cont:{
-                    cliente
-                }
+                mensaje:"Error",
+                contenido:cliente
             })
         }
         return res.status(202).json({
-            msg:"Se registro el cliente exitosamente",
-            contenido:{
-                cliente
-            }
+            mensaje:"Se registro el cliente exitosamente",
+            contenido:cliente
         })
     }).catch((err: any)=>{
         return res.status(500).json({
-            msg:"Ha ocurrido un error al registrar el cliente",
-            contenido:{
-                err
-            }
+            mensaje:"Ha ocurrido un error al registrar el cliente",
+            contenido:err
         })
     });
 })
@@ -89,24 +80,18 @@ app.delete('/clientes/:idCliente', (req:Request,res:Response ) =>{
     clienteModel.findByIdAndRemove(idCliente).then((cliente: ICliente |null ) =>{
         if(!cliente){
            return  res.status(404).json({
-               msg:"No se encontro el cliente a eliminar",
-               cont :{
-                   cliente
-               }
+               mensaje:"No se encontro el cliente a eliminar",
+               contenido :cliente
            })
         }
         return res.status(200).json({
             msg:"Se elimino al cliente",
-            cont:{
-                cliente
-            }
+            contenido:cliente
         })
     }).catch((err:any) =>{
         return res.json(500).json({
             msg: "Ocurrio un error",
-            cont:{
-                err
-            }
+            contenido:err
         })
     })
 })
@@ -122,29 +107,22 @@ app.put('/clientes/:idCliente', (req:Request, res:Response) =>{
     clienteModel.findByIdAndUpdate(idCliente,{ $set: cliente }).then((clienteRes:ICliente | null) =>{
         if(!clienteRes){
             return res.status(404).json({
-                msg:"No se encontro el cliente",
-                cont:{
-                    clienteRes
-                }
+                mensaje:"No se encontro el cliente",
+                contenido:clienteRes
             })
         }
 
         return res.status(200).json({
-            msg:"Se actualizo satisfactoriamente",
-            cont:{
-                clienteRes
-            }
+            mensaje:"Se actualizo satisfactoriamente",
+            contenido:clienteRes
         })
 
     }).catch((err:any ) =>{
         res.status(500).json({
-            msg:"Hubo un error",
-            cont:{
-                err
-            }
+            mensaje:"Hubo un error",
+            contenido:err
         })
     })
 })
-
 
 export {app}

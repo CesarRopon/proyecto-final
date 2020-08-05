@@ -11,7 +11,7 @@ let esquemaDetallePedido  = new Schema({
 
     idProducto:{
         type:mongoose.Types.ObjectId,
-        required:[true, ' se necesita idProducto'],
+        required:[true, 'Se necesita idProducto'],
         ref: 'producto'
     },
    /* idTipoPostre:{

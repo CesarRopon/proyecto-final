@@ -4,15 +4,11 @@ var mongoose_1 = require("mongoose");
 var esquemaEspecialidad = new mongoose_1.Schema({
     strDescripcion: {
         type: String,
-        required: [true, 'Necesitas costo']
+        required: [true, 'Necesita insertar descripcion']
     },
     nmbCosto: {
         type: Number,
-        required: [true, 'Necesitas costo']
-    },
-    blnActivo: {
-        type: Boolean,
-        default: true
+        required: [true, 'Costo necesario']
     }
 }, { collection: 'especialidad' });
 exports.default = mongoose_1.model('especialidad', esquemaEspecialidad);

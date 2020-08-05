@@ -29,7 +29,7 @@ app.get('/pedidos', (req:Request, res:Response) =>{
 })
 
 
-app.get('/pedidos/:idPedido/', (req:Request, res:Response)=>{
+app.get('/pedidos/:idPedido', (req:Request, res:Response)=>{
 
     let idPedido :string = req.params.idCliente;
 
@@ -99,6 +99,37 @@ app.put('/pedidos/:idPedido', (req:Request, res:Response) =>{
     })
 })
 
+
+app.delete('/pedidos/:idPedido', (req:Request, res:Response) =>{
+
+    let idPedido:string = req.params.idPedido;
+
+    if(idPedido.length<24 ||idPedido.length>24){
+        return res.json({
+            mensaje:"Error de id",
+            contenido: "Este es un formato no valido para id's"
+        })
+    }
+
+    pedidoModel.findByIdAndUpdate(idPedido, {set: {blnStatus:true}}).then((pedido: IPedido | null) =>{
+        if(!pedido){
+            return res.status(404).json({
+                mensaje: "Error de estatus",
+                contenido: "No se pudo cambiar el estatus del pedido"
+            })
+        }
+
+        return res.status(200).json({
+            mensaje:"hecho",
+            contenido: "Estatus cambiado"
+        })
+    }).catch((err: any) =>{
+        return res.status(500).json({
+            mensaje:"Error interno",
+            contenido: err
+        })
+    }) 
+})
 
 
 

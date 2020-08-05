@@ -46,9 +46,7 @@ app.get('/tipospostre/:idTipo', function (req, res) {
         }
         return res.status(200).json({
             mensaje: "Encontrado",
-            contenido: {
-                tipo: tipo
-            }
+            contenido: tipo
         });
     });
 });
@@ -59,23 +57,17 @@ app.put('/tipospostre/:idTipo', function (req, res) {
         if (!tipo) {
             return res.status(404).json({
                 mensaje: "No encontrado",
-                contenido: {
-                    tipo: tipo
-                }
+                contenido: tipo
             });
         }
         return res.status(200).json({
             mensaje: "Documento actualizado",
-            contenido: {
-                tipo: tipo
-            }
+            contenido: tipo
         });
     }).catch(function (err) {
         return res.status(500).json({
             mensaje: "Error interno",
-            contenido: {
-                err: err
-            }
+            contenido: err
         });
     });
 });
@@ -98,27 +90,21 @@ app.post('/tipospostre', function (req, res) {
 });
 app.delete('/tipospostre/:idTipo', function (req, res) {
     var idTipo = req.params.idTipo;
-    tipoPostre_model_1.default.findByIdAndUpdate(idTipo, { blnActivo: false }).then(function (tipos) {
+    tipoPostre_model_1.default.findByIdAndRemove(idTipo).then(function (tipos) {
         if (!tipos) {
             return res.status(404).json({
                 mensaje: "No eliminado",
-                contenido: {
-                    tipos: tipos
-                }
+                contenido: tipos
             });
         }
         return res.status(200).json({
             mensaje: "Dado de baja",
-            contenido: {
-                tipos: tipos
-            }
+            contenido: tipos
         });
     }).catch(function (err) {
         return res.status(500).json({
             mensaje: "Error interno",
-            contenido: {
-                err: err
-            }
+            contenido: err
         });
     });
 });

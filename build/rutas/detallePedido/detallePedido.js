@@ -11,19 +11,20 @@ exports.app = app;
 app.get('/pedidos/:idPedido/detalles', function (req, res) {
     var idPedido = req.params.idPedido;
     pedido_model_1.default.find({ _id: idPedido }).populate('idCliente').populate('aJsnDetallePedido.idProducto').then(function (detallesPedido) {
-        if (!detallesPedido) {
+        if (detallesPedido.length === 0) {
             return res.json({
-                mensaje: "No hay pedido"
+                mensaje: "No hay pedido",
+                contenido: "No existen pedidos"
             });
         }
         return res.status(200).json({
             mensaje: 'Detalles encontrados',
-            detallesPedido: detallesPedido
+            contenido: detallesPedido
         });
     }).catch(function (err) {
         return res.json({
             mensaje: "Error interno",
-            err: err
+            contenido: err
         });
     });
 });
@@ -34,17 +35,18 @@ app.post('/pedidos/:idPedido/detalles', function (req, res) {
         .then(function (newDetailInserted) {
         if (!newDetailInserted) {
             return res.json({
-                mensaje: "Detalle no insertado"
+                mensaje: "Error de detalle",
+                contenido: "Detalle no insertado"
             });
         }
         return res.status(500).json({
             mensaje: "Detalle insertado",
-            newDetailInserted: newDetailInserted
+            contenido: newDetailInserted
         });
     }).catch(function (err) {
         return res.json({
             mensaje: "Error interno",
-            err: err
+            contenido: err
         });
     });
 });
@@ -57,17 +59,17 @@ app.delete('/pedidos/:idPedido/detalles/:idDetalle', function (req, res) {
         if (!pedidoDeleted) {
             return res.json({
                 mensaje: "Detalle no eliminado",
-                pedidoDeleted: pedidoDeleted
+                contenido: pedidoDeleted
             });
         }
         return res.status(200).json({
             mensaje: "Detalle eliminado",
-            pedidoDeleted: pedidoDeleted
+            contenido: pedidoDeleted
         });
     }).catch(function (err) {
         return res.json({
             mensaje: "Error interno",
-            err: err
+            contenido: err
         });
     });
 });

@@ -54,7 +54,7 @@ var esquemaPedido = new mongoose_1.Schema({
     },
     strFechaAlta: {
         type: String,
-        required: true,
+        required: [true, 'Fecha de alta necesaria'],
         default: fechaStr
     },
     dteFechaEntrega: Date,

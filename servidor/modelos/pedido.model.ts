@@ -14,6 +14,7 @@ export interface IPedido extends Document{
     strFechaAlta?: string;
     aJsnDetallePedido:[IDetallePedido];
 }
+
 let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 let fechaActual:Date = new Date("Wed Jul 29 2020 13:51:43 GMT-0500");
 
@@ -45,7 +46,7 @@ let esquemaPedido = new Schema({
     },
     strFechaAlta:{
         type: String,
-        required: true,
+        required: [true ,'Fecha de alta necesaria'],
         default: fechaStr
 
     },

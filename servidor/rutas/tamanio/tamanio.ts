@@ -10,22 +10,19 @@ app.get('/tamanios',(req:Request, res:Response) =>{
     tamanioModel.find().then((tamanios: ITamanio[]) =>{
         if(tamanios.length <=0 ){
             return res.status(404).json({
-                msg:"No hay elementos para mostrar"
+                mensaje:"sin elementos",
+                contenido: "No hay elementos para mostrar" 
             })
         }
  
         return res.status(500).json({
-            msg:"Datos obtenidos exitosamente",
-            cont:{
-                tamanios
-            }
+            mensaje:"Datos obtenidos exitosamente",
+            contenido:tamanios
         })
     }).catch((err: any) =>{
         return res.status(200).json({
-            msg:"Error interno detectado",
-            cont:{
-                err
-            }
+            mensaje:"Error interno detectado",
+            contenido:err
         })
     })
 })
@@ -33,53 +30,54 @@ app.get('/tamanios',(req:Request, res:Response) =>{
 app.get('/tamanios/:idTamanio',(req:Request, res:Response) =>{
 
     let idTamanio: string = req.params.idTamanio;
+
+    if(idTamanio.length<24 || idTamanio.length>24){
+        return res.json({
+            mensaje:"Error de id",
+            contenido:"No es el formato correcto para id"
+        })
+    }
     tamanioModel.findById(idTamanio).then((tamanio: ITamanio | null) =>{
-        if(!tamanio ){
+        if(!tamanio){
             return res.status(404).json({
-                msg:"No se encontro el tamaño"
+                mensaje:"Sin tamaño",
+                contenido: "No se encontro el tamaño"
             })
         }
 
         return res.status(200).json({
-            msg:"Correcto",
-            cont:{
-                tamanio
-            }
+            mensaje:"Correcto",
+            contenido: tamanio
         })
     }).catch((err: any) =>{
         return res.status(500).json({
-            msg:"Error interno detectado",
-            cont:{
-                err
-            }
+            mensaje:"Error interno detectado",
+            contenido: err
         })
     })
 })
 
 app.post('/tamanios',(req:Request, res:Response) =>{
 
-    let tamanio: ITamanio = new tamanioModel(req.body);
+    let newTamanio: ITamanio = new tamanioModel(req.body);
 
     let idTamanio: string = req.params.idTamanio;
-    tamanioModel.findById(idTamanio).then((tamanio: ITamanio | null) =>{
+    new  tamanioModel(newTamanio).save().then((tamanio: ITamanio | null) =>{
         if(!tamanio ){
             return res.status(404).json({
-                msg:"No se encontro el tamaño"
+                mensaje:"No agregado",
+                contenido: "Tamaño no agregado"
             })
         }
-
+        let {strDescripcion}= newTamanio
         return res.status(200).json({
-            msg:"Correcto",
-            cont:{
-                tamanio
-            }
+            mensaje:"Dado de alta",
+            contenido : `${strDescripcion} dado de alta`
         })
     }).catch((err: any) =>{
         return res.status(500).json({
-            msg:"Error interno detectado",
-            cont:{
-                err
-            }
+            mensaje:"Error interno detectado",
+            contenido:err
         })
     })
 })
@@ -94,19 +92,19 @@ app.put('/tamanios/:idTamanio', (req:Request, res:Response) =>{
     tamanioModel.findByIdAndUpdate(idTamanio, {$set:tamanio}).then((tamanioUpdated: ITamanio | null )=>{
         if(!tamanioUpdated){
             return res.status(404).json({
-                msg:"Tamaño no encontrado"
+                mensaje:"Tamanio no encontrado",
+                contenido: "No se pudo actualizar"
             })
         }
 
         return res.status(200).json({
-            msg:"Datos actualizados correctamente",
-            cont:{
-                tamanioUpdated
-            }
+            mensaje:"Encontrado",
+            contenido: "Se actualizo correctamente"
         })
     }).catch((err:any )=>{
         return res.status(500).json({
-            msg: err
+            mensaje:"Error interno",
+            contenido: err
         })
     })
 })
@@ -118,15 +116,18 @@ app.delete('/tamanios/:idTamanio',(req:Request, res:Response)=>{
     tamanioModel.findByIdAndRemove(idTamanio).then((oldTamanio: ITamanio |null)=>{
         if(!oldTamanio){
             return res.status(404).json({
-                msg:"No se encontro ese documento"
+                mensaje:"No encontrado",
+                contenido:"No se pudo eliminar"
             })
         }
         return res.status(200).json({
-            msg:"Eliminado exitosamente"
+            mensaje:"Correcto",
+            contenido: "Eliminado exitosamente"
         })
     }).catch((err:any)=>{
         return res.status(500).json({
-            msg: err
+            mensaje:"Error interno",
+            contenido: err
         })
     })
 })

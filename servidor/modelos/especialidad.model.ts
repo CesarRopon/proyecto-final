@@ -2,22 +2,17 @@ import mongoose,{model, Schema, Document} from 'mongoose';
 
 
 export interface IEspecialidad extends Document{
-    strDescripcion: string,
-    nmbCosto: number,
-    blnActivo: boolean
+    strDescripcion: string;
+    nmbCosto: number;
 }
 let esquemaEspecialidad = new Schema({
     strDescripcion: {
         type:String,
-        required: [true, 'Necesitas costo']
+        required: [true, 'Necesita insertar descripcion']
     },
     nmbCosto: {
         type:Number,
-        required: [true, 'Necesitas costo']
-    },
-    blnActivo : {
-        type: Boolean,
-        default: true
+        required: [true, 'Costo necesario']
     }},
     {collection: 'especialidad'}
 )

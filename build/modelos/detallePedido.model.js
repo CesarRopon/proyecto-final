@@ -23,7 +23,7 @@ var mongoose_1 = __importStar(require("mongoose"));
 var esquemaDetallePedido = new mongoose_1.Schema({
     idProducto: {
         type: mongoose_1.default.Types.ObjectId,
-        required: [true, ' se necesita idProducto'],
+        required: [true, 'Se necesita idProducto'],
         ref: 'producto'
     },
     /* idTipoPostre:{

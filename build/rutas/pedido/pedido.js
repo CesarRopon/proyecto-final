@@ -30,7 +30,7 @@ app.get('/pedidos', function (req, res) {
         });
     });
 });
-app.get('/pedidos/:idPedido/', function (req, res) {
+app.get('/pedidos/:idPedido', function (req, res) {
     var idPedido = req.params.idCliente;
     pedido_model_1.default.findById(idPedido).populate('idCliente').then(function (pedidoEspecifico) {
         if (!pedidoEspecifico) {
@@ -86,6 +86,32 @@ app.put('/pedidos/:idPedido', function (req, res) {
         return res.json({
             mensaje: "Error interno",
             err: err
+        });
+    });
+});
+app.delete('/pedidos/:idPedido', function (req, res) {
+    var idPedido = req.params.idPedido;
+    if (idPedido.length < 24 || idPedido.length > 24) {
+        return res.json({
+            mensaje: "Error de id",
+            contenido: "Este es un formato no valido para id's"
+        });
+    }
+    pedido_model_1.default.findByIdAndUpdate(idPedido, { set: { blnStatus: true } }).then(function (pedido) {
+        if (!pedido) {
+            return res.status(404).json({
+                mensaje: "Error de estatus",
+                contenido: "No se pudo cambiar el estatus del pedido"
+            });
+        }
+        return res.status(200).json({
+            mensaje: "hecho",
+            contenido: "Estatus cambiado"
+        });
+    }).catch(function (err) {
+        return res.status(500).json({
+            mensaje: "Error interno",
+            contenido: err
         });
     });
 });

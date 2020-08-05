@@ -10,20 +10,21 @@ app.get('/pedidos/:idPedido/detalles', (req:Request, res:Response) =>{
 
     pedidoModel.find({_id:idPedido}).populate('idCliente').populate('aJsnDetallePedido.idProducto').then((detallesPedido:IPedido[] ) =>{
 
-        if(!detallesPedido){
+        if(detallesPedido.length ===0){
             return res.json({
-                mensaje: "No hay pedido"
+                mensaje: "No hay pedido",
+                contenido: "No existen pedidos"
             })
         }
 
         return res.status(200).json({
             mensaje: 'Detalles encontrados',
-            detallesPedido
+            contenido: detallesPedido
         })
     }).catch((err: any) =>{
         return res.json({
             mensaje:"Error interno",
-            err
+            contenido: err
         })
     })
 })
@@ -38,28 +39,28 @@ app.post('/pedidos/:idPedido/detalles', (req:Request, res:Response) =>{
     .then((newDetailInserted: IPedido | null) =>{
         if(!newDetailInserted){
             return res.json({
-                mensaje: "Detalle no insertado"
+                mensaje: "Error de detalle",
+                contenido: "Detalle no insertado"
             })
         }
 
         return res.status(500).json({
             mensaje:"Detalle insertado",
-            newDetailInserted
+            contenido: newDetailInserted
         })
     }).catch((err: any) =>{
         return res.json({
             mensaje: "Error interno",
-            err
+            contenido: err
         })
     })
 })
+
 
 app.delete('/pedidos/:idPedido/detalles/:idDetalle', (req:Request, res:Response) =>{
     
     let idPedido :string = req.params.idPedido;
     let idDetalle: string = req.params.idDetalle;
-
-
 
     //Si jala este delete
 
@@ -68,18 +69,18 @@ app.delete('/pedidos/:idPedido/detalles/:idDetalle', (req:Request, res:Response)
         if(!pedidoDeleted){
             return res.json({
                 mensaje:"Detalle no eliminado",
-            pedidoDeleted
+                contenido:pedidoDeleted
             })
 
         } 
         return res.status(200).json({
             mensaje: "Detalle eliminado",
-            pedidoDeleted
+            contenido: pedidoDeleted
         })
     }).catch((err: any)  =>{
         return res.json({
             mensaje: "Error interno",
-            err
+            contenido: err
         })
     })
 })

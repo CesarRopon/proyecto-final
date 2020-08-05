@@ -12,68 +12,66 @@ app.get('/tamanios', function (req, res) {
     tamanio_model_1.default.find().then(function (tamanios) {
         if (tamanios.length <= 0) {
             return res.status(404).json({
-                msg: "No hay elementos para mostrar"
+                mensaje: "sin elementos",
+                contenido: "No hay elementos para mostrar"
             });
         }
         return res.status(500).json({
-            msg: "Datos obtenidos exitosamente",
-            cont: {
-                tamanios: tamanios
-            }
+            mensaje: "Datos obtenidos exitosamente",
+            contenido: tamanios
         });
     }).catch(function (err) {
         return res.status(200).json({
-            msg: "Error interno detectado",
-            cont: {
-                err: err
-            }
+            mensaje: "Error interno detectado",
+            contenido: err
         });
     });
 });
 app.get('/tamanios/:idTamanio', function (req, res) {
     var idTamanio = req.params.idTamanio;
+    if (idTamanio.length < 24 || idTamanio.length > 24) {
+        return res.json({
+            mensaje: "Error de id",
+            contenido: "No es el formato correcto para id"
+        });
+    }
     tamanio_model_1.default.findById(idTamanio).then(function (tamanio) {
         if (!tamanio) {
             return res.status(404).json({
-                msg: "No se encontro el tamaño"
+                mensaje: "Sin tamaño",
+                contenido: "No se encontro el tamaño"
             });
         }
         return res.status(200).json({
-            msg: "Correcto",
-            cont: {
-                tamanio: tamanio
-            }
+            mensaje: "Correcto",
+            contenido: tamanio
         });
     }).catch(function (err) {
         return res.status(500).json({
-            msg: "Error interno detectado",
-            cont: {
-                err: err
-            }
+            mensaje: "Error interno detectado",
+            contenido: err
         });
     });
 });
 app.post('/tamanios', function (req, res) {
-    var tamanio = new tamanio_model_1.default(req.body);
+    var newTamanio = new tamanio_model_1.default(req.body);
     var idTamanio = req.params.idTamanio;
-    tamanio_model_1.default.findById(idTamanio).then(function (tamanio) {
+    new tamanio_model_1.default(newTamanio).save().then(function (tamanio) {
         if (!tamanio) {
             return res.status(404).json({
-                msg: "No se encontro el tamaño"
+                mensaje: "No agregado",
+                contenido: "Tamaño no agregado"
             });
         }
+        var strDescripcion = newTamanio.strDescripcion;
         return res.status(200).json({
-            msg: "Correcto",
-            cont: {
-                tamanio: tamanio
-            }
+            mensaje: "Dado de alta",
+            contenido: strDescripcion + " dado de alta"
         });
     }).catch(function (err) {
         return res.status(500).json({
-            msg: "Error interno detectado",
-            cont: {
-                err: err
-            }
+            mensaje: "Error interno detectado",
+            contenido: err
         });
     });
 });
@@ -84,18 +82,18 @@ app.put('/tamanios/:idTamanio', function (req, res) {
     tamanio_model_1.default.findByIdAndUpdate(idTamanio, { $set: tamanio }).then(function (tamanioUpdated) {
         if (!tamanioUpdated) {
             return res.status(404).json({
-                msg: "Tamaño no encontrado"
+                mensaje: "Tamanio no encontrado",
+                contenido: "No se pudo actualizar"
             });
         }
         return res.status(200).json({
-            msg: "Datos actualizados correctamente",
-            cont: {
-                tamanioUpdated: tamanioUpdated
-            }
+            mensaje: "Encontrado",
+            contenido: "Se actualizo correctamente"
         });
     }).catch(function (err) {
         return res.status(500).json({
-            msg: err
+            mensaje: "Error interno",
+            contenido: err
         });
     });
 });
@@ -104,15 +102,18 @@ app.delete('/tamanios/:idTamanio', function (req, res) {
     tamanio_model_1.default.findByIdAndRemove(idTamanio).then(function (oldTamanio) {
         if (!oldTamanio) {
             return res.status(404).json({
-                msg: "No se encontro ese documento"
+                mensaje: "No encontrado",
+                contenido: "No se pudo eliminar"
             });
         }
         return res.status(200).json({
-            msg: "Eliminado exitosamente"
+            mensaje: "Correcto",
+            contenido: "Eliminado exitosamente"
         });
     }).catch(function (err) {
         return res.status(500).json({
-            msg: err
+            mensaje: "Error interno",
+            contenido: err
         });
     });
 });
