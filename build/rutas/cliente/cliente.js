@@ -6,11 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 var express_1 = require("express");
 var cliente_model_1 = __importDefault(require("../../modelos/cliente.model"));
-var verificarToken_1 = require("../../middlewares/verificarToken");
 var app = express_1.Router();
 exports.app = app;
 //Obtener General
-app.get('/clientes', verificarToken_1.verificaToken, function (req, res) {
+app.get('/clientes', function (req, res) {
     cliente_model_1.default.find({ blnActivo: true }).then(function (cliente) {
         if (cliente.length === 0) {
             return res.json({

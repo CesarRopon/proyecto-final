@@ -2,7 +2,7 @@ import {Router, Request, Response} from 'express';
 import comentarioModel, {IComentario} from '../../modelos/comentario.model';
 import clienteModel, {ICliente} from '../../modelos/cliente.model';
 import { model } from 'mongoose';
-import { verificaToken } from '../../middlewares/verificarToken';
+
 
 
 const app : Router = Router();
@@ -60,7 +60,7 @@ app.post('/clientes/:idCliente/comentarios',( req :Request, res:Response) =>{
 
 
 //Encontrar un comentario y contestarlo
-app.put('/clientes/:idCliente/comentarios/:idComentario', verificaToken, (req:Request, res:Response) =>{
+app.put('/clientes/:idCliente/comentarios/:idComentario',(req:Request, res:Response) =>{
     let idCliente: string = req.params.idCliente;
     let idComentario: string = req.params.idComentario;
     let contestacion : IComentario = req.body;

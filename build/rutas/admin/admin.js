@@ -64,13 +64,11 @@ var express_1 = require("express");
 var admin_model_1 = __importDefault(require("../../modelos/admin.model"));
 var admin_model_2 = __importDefault(require("../../modelos/admin.model"));
 var Bcrypt = __importStar(require("bcrypt"));
-var jwt = __importStar(require("jsonwebtoken"));
-var verificarToken_1 = require("../../middlewares/verificarToken");
 //declaraciones
 var app = express_1.Router();
 exports.app = app;
 //
-app.get('/admin', verificarToken_1.verificaToken, function (req, res) {
+app.get('/admin', function (req, res) {
     admin_model_1.default.find().then(function (admin) {
         if (admin.length == 0) {
             return res.status(404).json({
@@ -112,7 +110,7 @@ app.post('/admin', function (req, res) {
         });
     });
 });
-app.put('/admin/:idAdmin', verificarToken_1.verificaToken, function (req, res) {
+app.put('/admin/:idAdmin', function (req, res) {
     var idAdmin = req.params.idAdmin;
     var admin = req.body;
     admin._id = idAdmin;
@@ -162,7 +160,7 @@ app.get('/admin/:strEmail', function (req, res) {
         });
     });
 });
-app.get('/admins/:idAdmin', verificarToken_1.verificaToken, function (req, res) {
+app.get('/admins/:idAdmin', function (req, res) {
     var idAdmin = req.params.idAdmin;
     admin_model_1.default.findById(idAdmin).then(function (admin) {
         if (!admin) {
@@ -219,26 +217,19 @@ app.post('/admin/login', function (req, res) {
             });
         }
         Bcrypt.compare(strPassword, admin.strPassword).then(function (resp) { return __awaiter(void 0, void 0, void 0, function () {
-            var token, strNombre, strApellidos;
+            var strNombre, strApellidos;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!resp) {
-                            return [2 /*return*/, res.json({
-                                    mensaje: "Contraseña incorrecta",
-                                    contenido: resp
-                                })];
-                        }
-                        return [4 /*yield*/, jwt.sign({ admin: admin }, "" + process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN })];
-                    case 1:
-                        token = _a.sent();
-                        strNombre = admin.strNombre, strApellidos = admin.strApellidos;
-                        return [2 /*return*/, res.status(200).json({
-                                mensaje: "Bienvenido al sistema " + strNombre + " " + strApellidos,
-                                contenido: admin,
-                                token: token
-                            })];
+                if (!resp) {
+                    return [2 /*return*/, res.json({
+                            mensaje: "Contraseña incorrecta",
+                            contenido: resp
+                        })];
                 }
+                strNombre = admin.strNombre, strApellidos = admin.strApellidos;
+                return [2 /*return*/, res.status(200).json({
+                        mensaje: "Bienvenido al sistema " + strNombre + " " + strApellidos,
+                        contenido: admin
+                    })];
             });
         }); }).catch(function (err) {
             return res.json({

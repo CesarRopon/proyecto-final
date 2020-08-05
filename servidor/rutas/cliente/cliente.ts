@@ -1,11 +1,10 @@
 import {Router, Request, Response} from "express";
 import clienteModel, {ICliente} from '../../modelos/cliente.model';
-import { verificaToken } from "../../middlewares/verificarToken";
 
 const app :Router = Router();
 
 //Obtener General
-app.get ('/clientes',  verificaToken, (req:Request, res: Response) =>{
+app.get ('/clientes',   (req:Request, res: Response) =>{
 
     clienteModel.find({blnActivo:true}).then((cliente:ICliente[]) =>{
         if(cliente.length ===0){

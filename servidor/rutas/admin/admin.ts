@@ -3,15 +3,14 @@ import express,{Router, Request,Response, response} from 'express';
 import AdminModel, {IAdmin} from '../../modelos/admin.model';
 import adminModel from '../../modelos/admin.model';
 import * as Bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
-import  {verificaToken} from '../../middlewares/verificarToken';
+
 //declaraciones
 const  app: Router = Router();
 
 
 //
 
-app.get('/admin',  verificaToken, (req:Request, res:Response) =>{
+app.get('/admin',  (req:Request, res:Response) =>{
 
     AdminModel.find().then((admin: IAdmin[]) =>{
         if(admin.length==0){
@@ -59,7 +58,7 @@ app.post('/admin', (req: Request, res:Response) =>{
     })
 })
 
-app.put('/admin/:idAdmin', verificaToken, (req: Request, res: Response) =>{
+app.put('/admin/:idAdmin',  (req: Request, res: Response) =>{
     let idAdmin: string = req.params.idAdmin;
     let admin: IAdmin = req.body;
     admin._id = idAdmin;
@@ -117,7 +116,7 @@ app.get('/admin/:strEmail', (req:Request, res:Response) =>{
 
 })
 
-app.get('/admins/:idAdmin', verificaToken,(req:Request, res:Response) =>{
+app.get('/admins/:idAdmin',(req:Request, res:Response) =>{
 
     let idAdmin: string = req.params.idAdmin;
     AdminModel.findById(idAdmin).then((admin: IAdmin | null) =>{
@@ -193,12 +192,11 @@ app.post('/admin/login',(req:Request, res:Response) =>{
                 })
             }
 
-            let token =await jwt.sign({admin}, `${process.env.SEED}`,{expiresIn: process.env.CADUCIDAD_TOKEN});
+            
             let {strNombre, strApellidos} = admin
             return res.status(200).json({
                 mensaje:`Bienvenido al sistema ${strNombre} ${strApellidos}`,
-                contenido: admin,
-                token
+                contenido: admin
             })
         }).catch((err: any) =>{
             return res.json({
