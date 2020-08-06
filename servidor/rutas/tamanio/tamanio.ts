@@ -96,7 +96,7 @@ app.put('/tamanios/:idTamanio', (req:Request, res:Response) =>{
                 contenido: "No se pudo actualizar"
             })
         }
-
+        
         return res.status(200).json({
             mensaje:"Encontrado",
             contenido: "Se actualizo correctamente"
