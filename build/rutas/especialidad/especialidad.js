@@ -90,10 +90,10 @@ app.put('/especialidades/:idEspecialidad', function (req, res) {
                 contenido: "No se pudo hacer la actualizacion de " + strDescripcion_1
             });
         }
-        var strDescripcion = especUpdated.strDescripcion;
+        var strDescripcion = especialidad.strDescripcion;
         return res.status(200).json({
-            mensaje: "Actualizada la especialidad " + strDescripcion,
-            contenido: especialidad
+            mensaje: "Actualizado",
+            contenido: "Se actualizo la especialidad " + strDescripcion
         });
     }).catch(function (err) {
         return res.status(500).json({

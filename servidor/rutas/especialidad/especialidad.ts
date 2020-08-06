@@ -103,10 +103,10 @@ app.put('/especialidades/:idEspecialidad', (req:Request, res:Response) =>{
             })
             
         }
-        let {strDescripcion} = especUpdated;
+        let {strDescripcion} = especialidad;
         return res.status(200).json({
-            mensaje:`Actualizada la especialidad ${strDescripcion}` ,
-            contenido: especialidad
+            mensaje:`Actualizado` ,
+            contenido: `Se actualizo la especialidad ${strDescripcion}`
         })
     }).catch((err:any) =>{
         return res.status(500).json({
