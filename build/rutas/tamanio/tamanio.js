@@ -10,18 +10,18 @@ var app = express_1.Router();
 exports.app = app;
 app.get('/tamanios', function (req, res) {
     tamanio_model_1.default.find().then(function (tamanios) {
-        if (tamanios.length <= 0) {
-            return res.status(404).json({
+        if (tamanios.length === 0) {
+            return res.json({
                 mensaje: "sin elementos",
                 contenido: "No hay elementos para mostrar"
             });
         }
-        return res.status(500).json({
+        return res.status(200).json({
             mensaje: "Datos obtenidos exitosamente",
             contenido: tamanios
         });
     }).catch(function (err) {
-        return res.status(200).json({
+        return res.status(500).json({
             mensaje: "Error interno detectado",
             contenido: err
         });

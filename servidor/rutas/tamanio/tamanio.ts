@@ -8,19 +8,19 @@ const app :Router = Router();
 app.get('/tamanios',(req:Request, res:Response) =>{
 
     tamanioModel.find().then((tamanios: ITamanio[]) =>{
-        if(tamanios.length <=0 ){
-            return res.status(404).json({
+        if(tamanios.length ===0 ){
+            return res.json({
                 mensaje:"sin elementos",
                 contenido: "No hay elementos para mostrar" 
             })
         }
  
-        return res.status(500).json({
+        return res.status(200).json({
             mensaje:"Datos obtenidos exitosamente",
             contenido:tamanios
         })
     }).catch((err: any) =>{
-        return res.status(200).json({
+        return res.status(500).json({
             mensaje:"Error interno detectado",
             contenido:err
         })

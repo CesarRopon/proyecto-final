@@ -1,5 +1,7 @@
 import {Router, Request, Response} from "express";
 import clienteModel, {ICliente} from '../../modelos/cliente.model';
+import * as bcrypt from "bcryptjs";
+
 
 const app :Router = Router();
 
@@ -24,6 +26,92 @@ app.get ('/clientes',   (req:Request, res: Response) =>{
         });
     })
 })
+
+
+
+//cambiar contraseña
+app.put('/clientes/changePass/:strEmail', (req:Request, res:Response) =>{
+
+    let emailAdmin :string = req.params.strEmail;    
+    let newPass = req.body.strPassword;
+
+    console.log(newPass+" "+ emailAdmin);
+
+    
+    clienteModel.findOne({strEmail: emailAdmin}).then((cliente : ICliente | null) =>{
+        if(!cliente){
+            return res.json({
+                mensaje:"No existe el correo"
+            })
+        }
+
+            newPass = bcrypt.hashSync(newPass, 10);
+            clienteModel.findByIdAndUpdate(cliente._id, {strPassword:newPass}).then((passChanged: ICliente | null) =>{
+                if(!passChanged){
+                    return res.json({
+                        mensaje:"No se pudo cambiar la contraseña"
+                    })
+                }
+                return res.json({
+                    mensaje:"Contraseña actualizada"
+                })
+            }).catch(() =>{
+                return res.json({
+                    mensaje:"Error interno"
+                })
+            })
+        }).catch((err:any) =>{
+           return res.json({
+               mensaje:"Error interno"
+           }) 
+        })
+    })
+
+
+
+
+    app.post('/admin/login',(req:Request, res:Response) =>{
+
+    
+        let {strEmail, strPassword} = req.body;
+    
+        clienteModel.findOne({strEmail : strEmail}).then((cliente: ICliente| null) =>{
+            if(!cliente){
+                return res.json({
+                    mensaje:"Correo incorrecto",
+                    contenido: cliente
+                })
+            }
+    
+            bcrypt.compare(strPassword,cliente.strPassword).then(async(resp:any) =>{
+                if(!resp){
+                    return res.json({
+                        mensaje:"Contraseña incorrecta",
+                        contenido: resp
+                    })
+                }
+    
+                let {strNombre, strApellidos} = cliente
+                return res.status(200).json({
+                    mensaje:`Bienvenido al sistema ${strNombre} ${strApellidos}`,
+                    contenido: cliente
+                })
+            }).catch((err: any) =>{
+                return res.json({
+                    mensaje:"Error al ingresar",
+                    contenido: err
+                })
+            })
+        }).catch((err:any) =>{
+            return res.json({
+                mensaje:"Error al ingresar",
+                contenido: err
+            })
+        })
+    })
+
+
+
 
 //Obtener Especifico
 app.get('/clientes/:idCliente',  (req: Request, res: Response)=>{
