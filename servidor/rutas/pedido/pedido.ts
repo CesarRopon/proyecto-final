@@ -10,15 +10,13 @@ app.get('/pedidos', (req:Request, res:Response) =>{
         if(pedidos.length===0){
             return res.json({
                 mensaje:"No hay pedidos",
-                pedidos,
-                mensaje2: req.get('host')
+                pedidos
             })    
         }
 
         return res.status(200).json({
             mensaje:"Pedidos encontrados",
-            pedidos,
-            mensaje2: req.get('host')
+            pedidos
         })
     }).catch((err:any) =>{
         return res.json({

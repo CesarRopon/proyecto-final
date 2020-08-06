@@ -14,14 +14,12 @@ app.get('/pedidos', function (req, res) {
         if (pedidos.length === 0) {
             return res.json({
                 mensaje: "No hay pedidos",
-                pedidos: pedidos,
-                mensaje2: req.get('host')
+                pedidos: pedidos
             });
         }
         return res.status(200).json({
             mensaje: "Pedidos encontrados",
-            pedidos: pedidos,
-            mensaje2: req.get('host')
+            pedidos: pedidos
         });
     }).catch(function (err) {
         return res.json({
