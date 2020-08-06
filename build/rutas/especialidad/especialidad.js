@@ -76,18 +76,19 @@ app.post('/especialidades', function (req, res) {
 app.put('/especialidades/:idEspecialidad', function (req, res) {
     var idEspecialidad = req.params.idEspecialidad;
     var especUpdated = req.body;
+    console.log(idEspecialidad);
+    console.log(especUpdated);
     if (idEspecialidad.length < 24) {
         return res.json({
             mensaje: "Error de id",
             contenido: "Este id no es valido para id especialidad"
         });
     }
-    especialidad_model_1.default.findByIdAndUpdate(idEspecialidad, { set: especUpdated }).then(function (especialidad) {
+    especialidad_model_1.default.findByIdAndUpdate(idEspecialidad, { $set: especUpdated }).then(function (especialidad) {
         if (!especialidad) {
-            var strDescripcion_1 = especUpdated.strDescripcion;
             return res.status(404).json({
                 mensaje: "Error de actualizacion",
-                contenido: "No se pudo hacer la actualizacion de " + strDescripcion_1
+                contenido: "No se pudo hacer la actualizacion"
             });
         }
         var strDescripcion = especialidad.strDescripcion;

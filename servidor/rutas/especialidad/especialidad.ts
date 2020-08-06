@@ -86,7 +86,9 @@ app.put('/especialidades/:idEspecialidad', (req:Request, res:Response) =>{
     let idEspecialidad : string = req.params.idEspecialidad;
     
     let especUpdated : IEspecialidad = req.body;
-
+    console.log(idEspecialidad);
+    
+    console.log(especUpdated)
     if(idEspecialidad.length<24){
         return res.json({
             mensaje:"Error de id",
@@ -94,12 +96,12 @@ app.put('/especialidades/:idEspecialidad', (req:Request, res:Response) =>{
         })
     }
 
-    especialidadModel.findByIdAndUpdate(idEspecialidad, {set: especUpdated}).then((especialidad: IEspecialidad | null) =>{
+    especialidadModel.findByIdAndUpdate(idEspecialidad, {$set: especUpdated}).then((especialidad: IEspecialidad | null) =>{
         if(!especialidad){
-            let {strDescripcion} = especUpdated;
+            
             return res.status(404).json({
                 mensaje:"Error de actualizacion",
-                contenido: `No se pudo hacer la actualizacion de ${strDescripcion}`
+                contenido: `No se pudo hacer la actualizacion`
             })
             
         }
