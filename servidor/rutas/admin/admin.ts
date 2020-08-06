@@ -58,6 +58,7 @@ app.post('/admin', (req: Request, res:Response) =>{
     })
 })
 
+//
 app.put('/admin/:idAdmin',  (req: Request, res: Response) =>{
     let idAdmin: string = req.params.idAdmin;
     let admin: IAdmin = req.body;
@@ -116,6 +117,7 @@ app.get('/admin/:strEmail', (req:Request, res:Response) =>{
 
 })
 
+//Obtener admin byid
 app.get('/admins/:idAdmin',(req:Request, res:Response) =>{
 
     let idAdmin: string = req.params.idAdmin;
@@ -139,7 +141,7 @@ app.get('/admins/:idAdmin',(req:Request, res:Response) =>{
 
 })
 
-
+//Borrar administrador
 app.delete('/admins/:idAdmin', (req: Request, res:Response) =>{
 
     let idAdmin:string = req.params.idAdmin;
@@ -192,7 +194,6 @@ app.post('/admin/login',(req:Request, res:Response) =>{
                 })
             }
 
-            
             let {strNombre, strApellidos} = admin
             return res.status(200).json({
                 mensaje:`Bienvenido al sistema ${strNombre} ${strApellidos}`,
@@ -212,6 +213,7 @@ app.post('/admin/login',(req:Request, res:Response) =>{
     })
 })
 
+//cambiar contraseña
 app.put('/admins/changePass/:strEmail', (req:Request, res:Response) =>{
 
     let emailAdmin :string = req.params.strEmail;    
@@ -239,12 +241,12 @@ app.put('/admins/changePass/:strEmail', (req:Request, res:Response) =>{
                 })
             }).catch(() =>{
                 return res.json({
-                    mensaje:"Error interno dada"
+                    mensaje:"Error interno"
                 })
             })
         }).catch((err:any) =>{
            return res.json({
-               mensaje:err
+               mensaje:"Error interno"
            }) 
         })
 })

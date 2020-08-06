@@ -110,6 +110,7 @@ app.post('/admin', function (req, res) {
         });
     });
 });
+//
 app.put('/admin/:idAdmin', function (req, res) {
     var idAdmin = req.params.idAdmin;
     var admin = req.body;
@@ -160,6 +161,7 @@ app.get('/admin/:strEmail', function (req, res) {
         });
     });
 });
+//Obtener admin byid
 app.get('/admins/:idAdmin', function (req, res) {
     var idAdmin = req.params.idAdmin;
     admin_model_1.default.findById(idAdmin).then(function (admin) {
@@ -180,6 +182,7 @@ app.get('/admins/:idAdmin', function (req, res) {
         });
     });
 });
+//Borrar administrador
 app.delete('/admins/:idAdmin', function (req, res) {
     var idAdmin = req.params.idAdmin;
     if (idAdmin.length < 24 || idAdmin.length > 24) {
@@ -244,6 +247,7 @@ app.post('/admin/login', function (req, res) {
         });
     });
 });
+//cambiar contraseña
 app.put('/admins/changePass/:strEmail', function (req, res) {
     var emailAdmin = req.params.strEmail;
     var newPass = req.body.strPassword;
@@ -266,12 +270,12 @@ app.put('/admins/changePass/:strEmail', function (req, res) {
             });
         }).catch(function () {
             return res.json({
-                mensaje: "Error interno dada"
+                mensaje: "Error interno"
             });
         });
     }).catch(function (err) {
         return res.json({
-            mensaje: err
+            mensaje: "Error interno"
         });
     });
 });
