@@ -141,6 +141,7 @@ app.get('/clientes/:idCliente',  (req: Request, res: Response)=>{
 app.post('/clientes', (req:Request, res:Response) => {
 
     let cliente : ICliente = req.body;
+    cliente.strPassword = bcrypt.hashSync(cliente.strPassword, 10);
     new clienteModel(cliente).save().then((cliente: ICliente) =>{
         if(!cliente){
             return res.status(404).json({

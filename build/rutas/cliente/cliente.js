@@ -177,6 +177,7 @@ app.get('/clientes/:idCliente', function (req, res) {
 //Agregar 
 app.post('/clientes', function (req, res) {
     var cliente = req.body;
+    cliente.strPassword = bcrypt.hashSync(cliente.strPassword, 10);
     new cliente_model_1.default(cliente).save().then(function (cliente) {
         if (!cliente) {
             return res.status(404).json({
