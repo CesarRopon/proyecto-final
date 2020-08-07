@@ -174,16 +174,13 @@ app.delete('/admins/:idAdmin', (req: Request, res:Response) =>{
 
 //metodo post para autenticacion de admin
 app.post('/admin/login',(req:Request, res:Response) =>{
-
-    
     let {strEmail, strPassword} = req.body;
-
+    
     adminModel.findOne({strEmail : strEmail}).then((admin: IAdmin| null) =>{
         if(!admin){
             return res.json({
                 mensaje:"Correo incorrecto",
-                contenido: admin
-            })
+                contenido:admin            })
         }
 
         bcrypt.compare(strPassword,admin.strPassword).then(async(resp:any) =>{

@@ -70,7 +70,7 @@ app.put('/clientes/changePass/:strEmail', (req:Request, res:Response) =>{
 
 
 
-    app.post('/admin/login',(req:Request, res:Response) =>{
+    app.post('/clientes/login',(req:Request, res:Response) =>{
 
     
         let {strEmail, strPassword} = req.body;

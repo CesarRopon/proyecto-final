@@ -116,7 +116,7 @@ app.put('/clientes/changePass/:strEmail', function (req, res) {
         });
     });
 });
-app.post('/admin/login', function (req, res) {
+app.post('/clientes/login', function (req, res) {
     var _a = req.body, strEmail = _a.strEmail, strPassword = _a.strPassword;
     cliente_model_1.default.findOne({ strEmail: strEmail }).then(function (cliente) {
         if (!cliente) {
