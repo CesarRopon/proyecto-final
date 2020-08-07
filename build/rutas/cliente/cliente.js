@@ -217,6 +217,26 @@ app.delete('/clientes/:idCliente', function (req, res) {
         });
     });
 });
+app.get('/clientes/:strEmail', function (req, res) {
+    var strEmail = req.params.strEmail;
+    cliente_model_1.default.find({ strEmail: strEmail }).then(function (cliente) {
+        if (cliente.length > 0) {
+            return res.status(200).json({
+                mensaje: "Persona encontrada",
+                contenido: cliente
+            });
+        }
+        return res.json({
+            mensaje: "Usuario no encontrado",
+            contenido: "Prueba con otro usuario"
+        });
+    }).catch(function (err) {
+        return res.status(500).json({
+            mensaje: "Error interno",
+            contenido: err
+        });
+    });
+});
 //Actualizar
 app.put('/clientes/:idCliente', function (req, res) {
     var idCliente = req.params.idCliente;
