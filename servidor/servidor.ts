@@ -8,8 +8,18 @@ import * as bodyParser from "body-parser"; //se le pone un alias a la importacio
 import routes from "./rutas/index";
 import * as eFileUpload from 'express-fileupload';
 var cors = require('cors');
+//import multer from 'multer';
+import * as uniqid from'uniqid';
+import * as path from 'path'
 
+/*const storage = multer.diskStorage({
+    destination:'uploads/imgProductos',
+    filename:(req, file, cb) =>{
+        cb(null,uniqid.default()+path.extname(file.originalname) );
+    }
+})
 
+export let upload = multer({storage:storage})*/
 
 mongoose.connect("mongodb+srv://juliocesar12345:juliocesar12345@clusterappadmin.utrfc.gcp.mongodb.net/dbadmin?retryWrites=true&w=majority", {
     useNewUrlParser : true,
@@ -38,7 +48,7 @@ app.use((req, res, next) => {
 });
 
 
-app.use(eFileUpload.default());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true})); //Esto se pone para usar el body-parser
 

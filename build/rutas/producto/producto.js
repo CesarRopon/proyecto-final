@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 var express_1 = require("express");
 var producto_model_1 = __importDefault(require("../../modelos/producto.model"));
+//import {upload} from '../../servidor';
 var app = express_1.Router();
 exports.app = app;
 app.get('/productos', function (req, res) {
@@ -60,6 +61,15 @@ app.get('/productos/:idProducto', function (req, res) {
     });
 });
 app.post('/productos', function (req, res, next) {
+    /*upload.single('strImg')(req, res, function(error: any){
+        if(error){
+            console.log('No jale ue');
+            
+        }else{
+            console.log("NO mms");
+        }
+        
+    })*/
     var newProducto = req.body;
     new producto_model_1.default(newProducto).save().then(function (producto) {
         if (!producto) {

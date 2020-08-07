@@ -10,18 +10,18 @@ app.get('/pedidos', (req:Request, res:Response) =>{
         if(pedidos.length===0){
             return res.json({
                 mensaje:"No hay pedidos",
-                pedidos
+                contenido: ""
             })    
         }
 
         return res.status(200).json({
             mensaje:"Pedidos encontrados",
-            pedidos
+            contenido:pedidos
         })
     }).catch((err:any) =>{
         return res.json({
             mensaje:"Error interno",
-            err
+            contenido:err
         })
     })
 })
@@ -35,17 +35,17 @@ app.get('/pedidos/:idPedido', (req:Request, res:Response)=>{
         if(!pedidoEspecifico){
            return res.json({
                mensaje: "No se encontro el pedido",
-               pedidoEspecifico
+               contenido: ""
            })     
         }
         return res.status(200).json({
             mensaje:"Pedido encontrado",
-            pedidoEspecifico
+            contenido:pedidoEspecifico
         })
     }).catch((err:any) =>{
         return res.json({
             mensaje:"Error interno",
-            err
+            contenido:err
         })
     })
 }) 
@@ -58,17 +58,18 @@ app.post('/pedidos',(req:Request, res:Response) =>{
     new pedidoModel(pedido).save().then((newPedido:IPedido) =>{
         if(!newPedido){
             return res.json({
-                mensaje: "No se pudo hacer el pedido"
+                mensaje: "No se pudo hacer el pedido",
+                contenido: ""
             })
         }
         return res.json({
             mensaje:"Pedido hecho, espera confirmacion del vendedor",
-            newPedido
+            contenido: newPedido
         })
     }).catch((err:any) =>{
         return res.json({
             mensaje:"Error en el servidor",
-            err
+            contenido: err
         })
     })
 })
@@ -80,19 +81,20 @@ app.put('/pedidos/:idPedido', (req:Request, res:Response) =>{
     pedidoModel.findByIdAndUpdate(idPedido, {$set: updatePedido}).then((pedidoUpdated: IPedido |null) =>{
         if(!pedidoUpdated){
             return res.json({
-                mensaje:"No se pudo actualizar el pedido"
+                mensaje:"No se pudo actualizar el pedido",
+                contenido:""
 
             })
         }
 
         return res.status(200).json({
             mensaje:"Pedido actualizado",
-            pedidoUpdated
+            contenido: pedidoUpdated
         })
     }).catch((err: any) =>{
         return res.json({
             mensaje:"Error interno",
-            err
+            contenido: err
         })
     })
 })

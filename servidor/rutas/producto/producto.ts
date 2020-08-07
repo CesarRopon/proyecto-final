@@ -4,6 +4,7 @@ import fileUpload, {UploadedFile} from 'express-fileupload';
 import {FileUpload} from '../../librerias/fileUpload';
 import multer from '../../libs/multer';
 import { json } from 'body-parser';
+//import {upload} from '../../servidor';
 
 const app :Router = Router();
 
@@ -63,8 +64,17 @@ app.get('/productos/:idProducto', (req:Request, res:Response) =>{
     })
 })
 
-app.post('/productos', (req:Request, res:Response, next) =>{
+app.post('/productos',(req:Request, res:Response, next) =>{
 
+    /*upload.single('strImg')(req, res, function(error: any){
+        if(error){
+            console.log('No jale ue');
+            
+        }else{
+            console.log("NO mms");
+        }
+        
+    })*/
     let newProducto : IProducto = req.body;
 
     new productoModel(newProducto).save().then((producto: IProducto) => {

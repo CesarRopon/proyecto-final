@@ -185,28 +185,7 @@ app.delete('/clientes/:idCliente', (req:Request,res:Response ) =>{
 })
 
 
-app.get('/clientes/:strEmail', (req:Request, res:Response) =>{
 
-    let strEmail: string = req.params.strEmail;
-    clienteModel.find({strEmail: strEmail}).then((cliente:ICliente[]) =>{
-        if(cliente.length>0){
-        return res.status(200).json({
-            mensaje: "Persona encontrada",
-            contenido:cliente
-        })
-    }
-    return res.json({
-        mensaje:"Usuario no encontrado",
-        contenido: "Prueba con otro usuario"
-    })
-    }).catch((err: any)=>{
-        return res.status(500).json({
-            mensaje: "Error interno",
-            contenido: err
-        })
-    })
-
-})
 
 
 

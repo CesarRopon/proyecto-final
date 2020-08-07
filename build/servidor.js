@@ -29,8 +29,15 @@ var mongoose_1 = __importDefault(require("mongoose"));
 var http = require('http');
 var bodyParser = __importStar(require("body-parser")); //se le pone un alias a la importacion de body-parser
 var index_1 = __importDefault(require("./rutas/index"));
-var eFileUpload = __importStar(require("express-fileupload"));
 var cors = require('cors');
+/*const storage = multer.diskStorage({
+    destination:'uploads/imgProductos',
+    filename:(req, file, cb) =>{
+        cb(null,uniqid.default()+path.extname(file.originalname) );
+    }
+})
+
+export let upload = multer({storage:storage})*/
 mongoose_1.default.connect("mongodb+srv://juliocesar12345:juliocesar12345@clusterappadmin.utrfc.gcp.mongodb.net/dbadmin?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -50,7 +57,6 @@ app.use(function (req, res, next) {
     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
 });
-app.use(eFileUpload.default());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); //Esto se pone para usar el body-parser
 app.use('/api', index_1.default); // en routes se recibe la ruta de la api y se le concatena /api, ejemplo /api/algo/idAlgo. /algo/idAlgo = routes

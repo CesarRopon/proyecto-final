@@ -14,17 +14,17 @@ app.get('/pedidos', function (req, res) {
         if (pedidos.length === 0) {
             return res.json({
                 mensaje: "No hay pedidos",
-                pedidos: pedidos
+                contenido: ""
             });
         }
         return res.status(200).json({
             mensaje: "Pedidos encontrados",
-            pedidos: pedidos
+            contenido: pedidos
         });
     }).catch(function (err) {
         return res.json({
             mensaje: "Error interno",
-            err: err
+            contenido: err
         });
     });
 });
@@ -34,17 +34,17 @@ app.get('/pedidos/:idPedido', function (req, res) {
         if (!pedidoEspecifico) {
             return res.json({
                 mensaje: "No se encontro el pedido",
-                pedidoEspecifico: pedidoEspecifico
+                contenido: ""
             });
         }
         return res.status(200).json({
             mensaje: "Pedido encontrado",
-            pedidoEspecifico: pedidoEspecifico
+            contenido: pedidoEspecifico
         });
     }).catch(function (err) {
         return res.json({
             mensaje: "Error interno",
-            err: err
+            contenido: err
         });
     });
 });
@@ -53,17 +53,18 @@ app.post('/pedidos', function (req, res) {
     new pedido_model_1.default(pedido).save().then(function (newPedido) {
         if (!newPedido) {
             return res.json({
-                mensaje: "No se pudo hacer el pedido"
+                mensaje: "No se pudo hacer el pedido",
+                contenido: ""
             });
         }
         return res.json({
             mensaje: "Pedido hecho, espera confirmacion del vendedor",
-            newPedido: newPedido
+            contenido: newPedido
         });
     }).catch(function (err) {
         return res.json({
             mensaje: "Error en el servidor",
-            err: err
+            contenido: err
         });
     });
 });
@@ -73,17 +74,18 @@ app.put('/pedidos/:idPedido', function (req, res) {
     pedido_model_1.default.findByIdAndUpdate(idPedido, { $set: updatePedido }).then(function (pedidoUpdated) {
         if (!pedidoUpdated) {
             return res.json({
-                mensaje: "No se pudo actualizar el pedido"
+                mensaje: "No se pudo actualizar el pedido",
+                contenido: ""
             });
         }
         return res.status(200).json({
             mensaje: "Pedido actualizado",
-            pedidoUpdated: pedidoUpdated
+            contenido: pedidoUpdated
         });
     }).catch(function (err) {
         return res.json({
             mensaje: "Error interno",
-            err: err
+            contenido: err
         });
     });
 });
