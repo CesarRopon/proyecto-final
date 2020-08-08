@@ -29,9 +29,9 @@ app.get('/pedidos', (req:Request, res:Response) =>{
 
 app.get('/pedidos/:idPedido', (req:Request, res:Response)=>{
 
-    let idPedido :string = req.params.idCliente;
+    let idPedido :string = req.params.idPedido;
 
-    pedidoModel.findById(idPedido).populate('idCliente').then((pedidoEspecifico:IPedido | null) =>{
+    pedidoModel.findById(idPedido).populate('idCliente').populate('idUbicacion').then((pedidoEspecifico:IPedido | null) =>{
         if(!pedidoEspecifico){
            return res.json({
                mensaje: "No se encontro el pedido",
