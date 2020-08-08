@@ -31,5 +31,5 @@ var esquemaUbicacion = new mongoose_1.Schema({
     strCalle: String,
     strColonia: String,
     strAliasUbicacion: String
-});
+}, { collection: "ubicacion" });
 exports.default = mongoose_1.model('ubicacion', esquemaUbicacion);

@@ -20,7 +20,8 @@ let esquemaUbicacion = new Schema({
     nmbLongitud: Number,
     strCalle: String,
     strColonia: String,
-    strAliasUbicacion: String}
+    strAliasUbicacion: String},
+    {collection:"ubicacion"}
 )
 
 export default model <IUbicacion>('ubicacion', esquemaUbicacion)
