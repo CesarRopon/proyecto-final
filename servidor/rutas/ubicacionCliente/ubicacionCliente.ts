@@ -15,10 +15,29 @@ app.get('/clientes/:idCliente/ubicaciones', (req:Request, res:Response) =>{
         })
     }
 
+    UbicacionModel.find({idCliente:idCliente}).then((ubicaciones:IUbicacion[]) =>{
+        if(ubicaciones.length==0){
+            return res.json({
+                mensaje:"Error",
+                contenido:"No hay ubicaciones"
+            })
+        }
+
+        return res.status(200).json({
+            mensaje:"Pedidos encontrados",
+            contenido: ubicaciones
+        })
+    }).catch((err:any) =>{
+        return res.json({
+            mensaje:"Error interno",
+            contenido: err
+        })
+    })
+
 })
 
 
-app.get('clientes/:idCliente/ubicaciones/:idUbicacion', (req:Request, res:Response) =>{
+app.get('/clientes/:idCliente/ubicaciones/:idUbicacion', (req:Request, res:Response) =>{
 
 
     let idCliente:string  = req.params.idCliente;
@@ -40,7 +59,7 @@ app.get('clientes/:idCliente/ubicaciones/:idUbicacion', (req:Request, res:Respon
         if(ubicacion.length==0){
             return res.status(404).json({
                 mensaje:"Vacio",
-                contenido: "No exist esa ubicacion"
+                contenido: "No existe esa ubicacion"
             })        
         }
 
@@ -120,11 +139,12 @@ app.put('/clientes/:idCliente/ubicaciones/:idUbicacion', (req:Request, res:Respo
 })
 
 
-app.delete('clientes/:idCliente/ubicaciones/:idUbicacion', (req: Request, res: Response) =>{
+app.delete('/clientes/:idCliente/ubicaciones/:idUbicacion', (req: Request, res: Response) =>{
 
     let idCliente: string = req.params.idCliente;
     let idUbicacion: string = req.params.idUbicacion;
 
+    
     if(idCliente.length <24 || idCliente.length>24){
         return res.status(404).json({
             mensaje: "Error id",
