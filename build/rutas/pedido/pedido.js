@@ -30,7 +30,7 @@ app.get('/pedidos', function (req, res) {
 });
 app.get('/pedidos/:idPedido', function (req, res) {
     var idPedido = req.params.idPedido;
-    pedido_model_1.default.findById(idPedido).populate('idCliente').populate('idUbicacion').then(function (pedidoEspecifico) {
+    pedido_model_1.default.findById(idPedido).populate('idCliente').populate('idUbicacion').populate('aJsnDetallePedido.idProducto').then(function (pedidoEspecifico) {
         if (!pedidoEspecifico) {
             return res.json({
                 mensaje: "No se encontro el pedido",

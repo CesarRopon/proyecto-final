@@ -1,6 +1,7 @@
 import {Router, Request, Response} from 'express';
 import detalleModel, {IDetallePedido} from '../../modelos/detallePedido.model';
 import pedidoModel ,{IPedido} from '../../modelos/pedido.model';
+import { json } from 'body-parser';
 
 const app :Router = Router();
 
@@ -30,11 +31,39 @@ app.get('/pedidos/:idPedido/detalles', (req:Request, res:Response) =>{
 })
 
 
+
+app.get('/pedidos/:idPedido/detalles/:idProducto', (req:Request, res:Response) =>{
+
+    let idPedido :string = req.params.idPedido;
+    let idProducto :string = req.params.idProducto;
+    
+    
+    pedidoModel.find({_id:idPedido, 'aJsnDetallePedido.idProducto':idProducto}).then((getPedido: IPedido[]) =>{
+        if(getPedido.length>0){
+            return res.json({
+                mensaje:"Ya existe",
+                contenido: "Este producto ya esta en tu carrito"
+            })
+        }
+        return res.json({
+            mensaje:"No existe",
+            
+        })
+    }).catch(() =>{
+        return res.json({
+            mensaje:"Error interno",
+
+        })
+    })
+})
+
 app.post('/pedidos/:idPedido/detalles', (req:Request, res:Response) =>{
 
     let idPedido: string = req.params.idPedido;
     let newDetalle :IDetallePedido = req.body;
-
+    console.log('sadasdas');
+    console.log(newDetalle);
+    
     pedidoModel.findByIdAndUpdate(idPedido, {$push :{'aJsnDetallePedido': newDetalle}})
     .then((newDetailInserted: IPedido | null) =>{
         if(!newDetailInserted){
@@ -44,7 +73,7 @@ app.post('/pedidos/:idPedido/detalles', (req:Request, res:Response) =>{
             })
         }
 
-        return res.status(500).json({
+        return res.status(200).json({
             mensaje:"Detalle insertado",
             contenido: newDetailInserted
         })

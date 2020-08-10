@@ -28,9 +28,30 @@ app.get('/pedidos/:idPedido/detalles', function (req, res) {
         });
     });
 });
+app.get('/pedidos/:idPedido/detalles/:idProducto', function (req, res) {
+    var idPedido = req.params.idPedido;
+    var idProducto = req.params.idProducto;
+    pedido_model_1.default.find({ _id: idPedido, 'aJsnDetallePedido.idProducto': idProducto }).then(function (getPedido) {
+        if (getPedido.length > 0) {
+            return res.json({
+                mensaje: "Ya existe",
+                contenido: "Este producto ya esta en tu carrito"
+            });
+        }
+        return res.json({
+            mensaje: "No existe",
+        });
+    }).catch(function () {
+        return res.json({
+            mensaje: "Error interno",
+        });
+    });
+});
 app.post('/pedidos/:idPedido/detalles', function (req, res) {
     var idPedido = req.params.idPedido;
     var newDetalle = req.body;
+    console.log('sadasdas');
+    console.log(newDetalle);
     pedido_model_1.default.findByIdAndUpdate(idPedido, { $push: { 'aJsnDetallePedido': newDetalle } })
         .then(function (newDetailInserted) {
         if (!newDetailInserted) {
@@ -39,7 +60,7 @@ app.post('/pedidos/:idPedido/detalles', function (req, res) {
                 contenido: "Detalle no insertado"
             });
         }
-        return res.status(500).json({
+        return res.status(200).json({
             mensaje: "Detalle insertado",
             contenido: newDetailInserted
         });

@@ -31,7 +31,7 @@ app.get('/pedidos/:idPedido', (req:Request, res:Response)=>{
 
     let idPedido :string = req.params.idPedido;
 
-    pedidoModel.findById(idPedido).populate('idCliente').populate('idUbicacion').then((pedidoEspecifico:IPedido | null) =>{
+    pedidoModel.findById(idPedido).populate('idCliente').populate('idUbicacion').populate('aJsnDetallePedido.idProducto').then((pedidoEspecifico:IPedido | null) =>{
         if(!pedidoEspecifico){
            return res.json({
                mensaje: "No se encontro el pedido",
@@ -54,7 +54,7 @@ app.get('/pedidos/:idPedido', (req:Request, res:Response)=>{
 app.post('/pedidos',(req:Request, res:Response) =>{
 
     let pedido: IPedido = req.body;
-
+    
     new pedidoModel(pedido).save().then((newPedido:IPedido) =>{
         if(!newPedido){
             return res.json({
@@ -83,7 +83,6 @@ app.put('/pedidos/:idPedido', (req:Request, res:Response) =>{
             return res.json({
                 mensaje:"No se pudo actualizar el pedido",
                 contenido:""
-
             })
         }
 
@@ -130,15 +129,5 @@ app.delete('/pedidos/:idPedido', (req:Request, res:Response) =>{
         })
     }) 
 })
-
-
-
-
-
-
-
-
-
-
 
 export {app}

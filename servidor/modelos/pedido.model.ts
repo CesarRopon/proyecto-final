@@ -11,12 +11,12 @@ export interface IPedido extends Document{
     dteFechaAlta: Date,
     dteFechaEntrega?: Date;
     strFechaEntrega?:string;
-    strFechaAlta?: string;
+    strFechaAlta: string;
     aJsnDetallePedido:[IDetallePedido];
 }
 
 let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-let fechaActual:Date = new Date("Wed Jul 29 2020 13:51:43 GMT-0500");
+let fechaActual:Date = new Date();
 
 let fechaStr = `${fechaActual.getDate()} ${meses[fechaActual.getMonth()]} ${fechaActual.getFullYear()}`
 let esquemaPedido = new Schema({
@@ -37,12 +37,12 @@ let esquemaPedido = new Schema({
     },
     blnStatus:{
             type:Boolean,
-            default:false
+            default:true
     },
     dteFechaAlta:{
         type:String,
         required:[true, 'No se recibio fecha alta'],
-        default:new Date("Wed Jul 29 2020 13:51:43 GMT-0500")
+        default: new Date()
     },
     strFechaAlta:{
         type: String,

@@ -5,6 +5,7 @@ export interface IDetallePedido extends Document{
     idProducto?: string;
     modelo?: string;
     strComentarios?: string,
+    nmbCantidad?: number
 }
 
 let esquemaDetallePedido  = new Schema({
@@ -13,6 +14,10 @@ let esquemaDetallePedido  = new Schema({
         type:mongoose.Types.ObjectId,
         required:[true, 'Se necesita idProducto'],
         ref: 'producto'
+    },
+    nmbCantidad:{
+        type:Number,
+        default:1
     },
    /* idTipoPostre:{
         type:mongoose.Types.ObjectId,

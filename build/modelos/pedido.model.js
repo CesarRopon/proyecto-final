@@ -25,7 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = __importStar(require("mongoose"));
 var detallePedido_model_1 = __importDefault(require("../modelos/detallePedido.model"));
 var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-var fechaActual = new Date("Wed Jul 29 2020 13:51:43 GMT-0500");
+var fechaActual = new Date();
 var fechaStr = fechaActual.getDate() + " " + meses[fechaActual.getMonth()] + " " + fechaActual.getFullYear();
 var esquemaPedido = new mongoose_1.Schema({
     idUbicacion: {
@@ -45,12 +45,12 @@ var esquemaPedido = new mongoose_1.Schema({
     },
     blnStatus: {
         type: Boolean,
-        default: false
+        default: true
     },
     dteFechaAlta: {
         type: String,
         required: [true, 'No se recibio fecha alta'],
-        default: new Date("Wed Jul 29 2020 13:51:43 GMT-0500")
+        default: new Date()
     },
     strFechaAlta: {
         type: String,

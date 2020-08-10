@@ -26,6 +26,10 @@ var esquemaDetallePedido = new mongoose_1.Schema({
         required: [true, 'Se necesita idProducto'],
         ref: 'producto'
     },
+    nmbCantidad: {
+        type: Number,
+        default: 1
+    },
     /* idTipoPostre:{
          type:mongoose.Types.ObjectId,
          ref:'tipopostre'
