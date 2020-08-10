@@ -30,6 +30,7 @@ app.get('/pedidos', function (req, res) {
 });
 app.get('/pedidos/:idPedido', function (req, res) {
     var idPedido = req.params.idPedido;
+    var totalCarrito = 0;
     pedido_model_1.default.findById(idPedido).populate('idCliente').populate('idUbicacion').populate('aJsnDetallePedido.idProducto').then(function (pedidoEspecifico) {
         if (!pedidoEspecifico) {
             return res.json({
@@ -37,9 +38,11 @@ app.get('/pedidos/:idPedido', function (req, res) {
                 contenido: ""
             });
         }
+        totalCarrito = pedidoEspecifico.aJsnDetallePedido.length;
         return res.status(200).json({
             mensaje: "Pedido encontrado",
-            contenido: pedidoEspecifico
+            contenido: pedidoEspecifico,
+            totalCarrito: totalCarrito
         });
     }).catch(function (err) {
         return res.json({

@@ -30,7 +30,7 @@ app.get('/pedidos', (req:Request, res:Response) =>{
 app.get('/pedidos/:idPedido', (req:Request, res:Response)=>{
 
     let idPedido :string = req.params.idPedido;
-
+    let totalCarrito =0;
     pedidoModel.findById(idPedido).populate('idCliente').populate('idUbicacion').populate('aJsnDetallePedido.idProducto').then((pedidoEspecifico:IPedido | null) =>{
         if(!pedidoEspecifico){
            return res.json({
@@ -38,9 +38,12 @@ app.get('/pedidos/:idPedido', (req:Request, res:Response)=>{
                contenido: ""
            })     
         }
+        
+        totalCarrito = pedidoEspecifico.aJsnDetallePedido.length
         return res.status(200).json({
             mensaje:"Pedido encontrado",
-            contenido:pedidoEspecifico
+            contenido:pedidoEspecifico,
+            totalCarrito
         })
     }).catch((err:any) =>{
         return res.json({
@@ -83,6 +86,7 @@ app.put('/pedidos/:idPedido', (req:Request, res:Response) =>{
             return res.json({
                 mensaje:"No se pudo actualizar el pedido",
                 contenido:""
+
             })
         }
 
