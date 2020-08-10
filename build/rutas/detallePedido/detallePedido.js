@@ -50,8 +50,6 @@ app.get('/pedidos/:idPedido/detalles/:idProducto', function (req, res) {
 app.post('/pedidos/:idPedido/detalles', function (req, res) {
     var idPedido = req.params.idPedido;
     var newDetalle = req.body;
-    console.log('sadasdas');
-    console.log(newDetalle);
     pedido_model_1.default.findByIdAndUpdate(idPedido, { $push: { 'aJsnDetallePedido': newDetalle } })
         .then(function (newDetailInserted) {
         if (!newDetailInserted) {

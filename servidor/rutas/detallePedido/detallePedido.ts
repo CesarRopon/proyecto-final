@@ -61,9 +61,7 @@ app.post('/pedidos/:idPedido/detalles', (req:Request, res:Response) =>{
 
     let idPedido: string = req.params.idPedido;
     let newDetalle :IDetallePedido = req.body;
-    console.log('sadasdas');
-    console.log(newDetalle);
-    
+
     pedidoModel.findByIdAndUpdate(idPedido, {$push :{'aJsnDetallePedido': newDetalle}})
     .then((newDetailInserted: IPedido | null) =>{
         if(!newDetailInserted){

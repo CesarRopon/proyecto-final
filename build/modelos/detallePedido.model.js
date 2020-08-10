@@ -30,6 +30,7 @@ var esquemaDetallePedido = new mongoose_1.Schema({
         type: Number,
         default: 1
     },
+    nmbTotalCantidadPrecio: Number,
     /* idTipoPostre:{
          type:mongoose.Types.ObjectId,
          ref:'tipopostre'
