@@ -20,6 +20,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = __importStar(require("mongoose"));
+var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+var fechaActual = new Date();
+var fechaStr = fechaActual.getDate() + " " + meses[fechaActual.getMonth()] + " " + fechaActual.getFullYear();
 var schemaComent = new mongoose_1.Schema({
     idCliente: {
         type: mongoose_1.default.Types.ObjectId,
@@ -36,7 +39,8 @@ var schemaComent = new mongoose_1.Schema({
     },
     dteFechaComentario: {
         type: String,
-        required: [true, "fecha coment"]
+        required: [true, "fecha coment"],
+        default: fechaStr
     },
     blnStatus: {
         type: Boolean,

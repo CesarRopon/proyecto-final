@@ -10,6 +10,11 @@ export interface IComentario extends Document {
     blnStatus: boolean;
 }
 
+
+let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+let fechaActual:Date = new Date();
+
+let fechaStr = `${fechaActual.getDate()} ${meses[fechaActual.getMonth()]} ${fechaActual.getFullYear()}`
 let schemaComent = new Schema({
 
     idCliente:{
@@ -27,7 +32,8 @@ let schemaComent = new Schema({
     },
     dteFechaComentario:{
         type:String,
-        required:[true, "fecha coment"]
+        required:[true, "fecha coment"],
+        default: fechaStr
     },
     blnStatus:{
         type:Boolean,
