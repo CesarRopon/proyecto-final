@@ -66,15 +66,15 @@ app.get('/productos/:idProducto', (req:Request, res:Response) =>{
 
 app.post('/productos',(req:Request, res:Response, next) =>{
 
-    /*upload.single('strImg')(req, res, function(error: any){
+    multer.single('strImg')(req, res, function(error: any){
         if(error){
-            console.log('No jale ue');
+            console.log('No esta correcto');
             
         }else{
-            console.log("NO mms");
+            console.log("Esta correcto");
         }
         
-    })*/
+    })
     let newProducto : IProducto = req.body;
 
     new productoModel(newProducto).save().then((producto: IProducto) => {
