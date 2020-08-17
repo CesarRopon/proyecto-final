@@ -61,15 +61,8 @@ app.get('/productos/:idProducto', function (req, res) {
         });
     });
 });
-app.post('/productos', function (req, res, next) {
-    multer_1.default.single('strImg')(req, res, function (error) {
-        if (error) {
-            console.log('No esta correcto');
-        }
-        else {
-            console.log("Esta correcto");
-        }
-    });
+//multer cuenta como un middleware
+app.post('/productos', multer_1.default.single('strImg'), function (req, res, next) {
     var newProducto = req.body;
     new producto_model_1.default(newProducto).save().then(function (producto) {
         if (!producto) {

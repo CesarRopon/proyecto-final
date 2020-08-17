@@ -64,19 +64,14 @@ app.get('/productos/:idProducto', (req:Request, res:Response) =>{
     })
 })
 
-app.post('/productos',(req:Request, res:Response, next) =>{
 
-    multer.single('strImg')(req, res, function(error: any){
-        if(error){
-            console.log('No esta correcto');
-            
-        }else{
-            console.log("Esta correcto");
-        }
-        
-    })
+//multer cuenta como un middleware
+app.post('/productos', multer.single('strImg'),(req:Request, res:Response, next) =>{
+
+
     let newProducto : IProducto = req.body;
-
+    
+    
     new productoModel(newProducto).save().then((producto: IProducto) => {
         if(!producto){
             return res.status(404).json({
