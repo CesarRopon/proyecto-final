@@ -8,7 +8,7 @@ app.get('/pedidos', (req:Request, res:Response) =>{
 
     pedidoModel.find({blnStatus:false}).populate('idCliente').then((pedidos : IPedido[] )=>{
         if(pedidos.length===0){
-            return res.json({
+            return res.status(404).json({
                 mensaje:"No hay pedidos",
                 contenido: ""
             })    
@@ -19,7 +19,7 @@ app.get('/pedidos', (req:Request, res:Response) =>{
             contenido:pedidos
         })
     }).catch((err:any) =>{
-        return res.json({
+        return res.status(500).json({
             mensaje:"Error interno",
             contenido:err
         })
@@ -33,7 +33,7 @@ app.get('/pedidos/:idPedido', (req:Request, res:Response)=>{
     let totalCarrito =0;
     pedidoModel.findById(idPedido).populate('idCliente').populate('idUbicacion').populate('aJsnDetallePedido.idProducto').then((pedidoEspecifico:IPedido | null) =>{
         if(!pedidoEspecifico){
-           return res.json({
+           return res.status(404).json({
                mensaje: "No se encontro el pedido",
                contenido: ""
            })     
@@ -46,7 +46,7 @@ app.get('/pedidos/:idPedido', (req:Request, res:Response)=>{
             totalCarrito
         })
     }).catch((err:any) =>{
-        return res.json({
+        return res.status(500).json({
             mensaje:"Error interno",
             contenido:err
         })
@@ -60,12 +60,12 @@ app.post('/pedidos',(req:Request, res:Response) =>{
     
     new pedidoModel(pedido).save().then((newPedido:IPedido) =>{
         if(!newPedido){
-            return res.json({
+            return res.status(404).json({
                 mensaje: "No se pudo hacer el pedido",
                 contenido: ""
             })
         }
-        return res.json({
+        return res.status(200).json({
             mensaje:"Pedido hecho, espera confirmacion del vendedor",
             contenido: newPedido
         })
@@ -95,7 +95,7 @@ app.put('/pedidos/:idPedido', (req:Request, res:Response) =>{
             contenido: pedidoUpdated
         })
     }).catch((err: any) =>{
-        return res.json({
+        return res.status(500).json({
             mensaje:"Error interno",
             contenido: err
         })

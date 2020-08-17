@@ -28,11 +28,11 @@ let schemaComent = new Schema({
     },
     strComentario: {
         type: String,
-        required:[true, "coment"] 
+        required:[true, "No se agrego comentario"] 
     },
     dteFechaComentario:{
         type:String,
-        required:[true, "fecha coment"],
+        required:[true, "No se agrego fecha comentario"],
         default: fechaStr
     },
     blnStatus:{

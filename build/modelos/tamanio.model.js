@@ -4,7 +4,7 @@ var mongoose_1 = require("mongoose");
 var esquemaTamanio = new mongoose_1.Schema({
     strDescripcion: {
         type: String,
-        required: [true, 'No se ingreso el nombre del producto']
+        required: [true, 'No se ingreso la dscripcion del tamaño']
     },
     nmbCosto: {
         type: Number,

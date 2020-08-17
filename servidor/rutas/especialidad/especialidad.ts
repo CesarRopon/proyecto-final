@@ -122,7 +122,7 @@ app.delete('/especialidades/:idEspecialidad', (req:Request, res:Response) =>{
     
     let idEspecialidad : string = req.params.idEspecialidad;
     if(idEspecialidad.length<24){
-        return res.json({
+        return res.status(404).json({
             mensaje: "Error de id",
             contenido: "Este id para especialidad no es valido"
         })

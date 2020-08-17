@@ -14,7 +14,7 @@ app.get('/clientes/:idCliente/comentarios', (req:Request, res:Response) =>{
     let idCliente: string= req.params.idCliente;
     comentarioModel.find({idCliente:idCliente}).populate('idCliente').then((comentariosCliente: IComentario[]) =>{
     if(comentariosCliente.length===0){
-        return res.json({
+        return res.status(404).json({
             mensaje: "No hay comentarios",
             comentariosCliente
         })
@@ -39,13 +39,13 @@ app.post('/clientes/:idCliente/comentarios',( req :Request, res:Response) =>{
 
     new comentarioModel(newComment).save().then((nuevoComm:IComentario| null ) =>{
         if(!nuevoComm){
-            return res.json({
+            return res.status(404).json({
                 mensaje: "No enviado",
                 nuevoComm
             })
         }
 
-        return res.json({
+        return res.status(200).json({
             mensaje: "Enviado",
             nuevoComm
         })
@@ -67,7 +67,7 @@ app.put('/clientes/:idCliente/comentarios/:idComentario',(req:Request, res:Respo
 
     comentarioModel.findByIdAndUpdate(idComentario, {$set: contestacion}).then((contestacionAdmin: IComentario |null) =>{
         if(!contestacionAdmin){
-            return res.json({
+            return res.status(404).json({
                 mensaje:"No contestado",
                 contestacionAdmin
             })
@@ -78,7 +78,7 @@ app.put('/clientes/:idCliente/comentarios/:idComentario',(req:Request, res:Respo
             contestacionAdmin
         })
     }).catch((err: any) =>{
-        return res.json({
+        return res.status(500).json({
             mensaje:"Error interno",
             err
         })
@@ -94,7 +94,7 @@ app.get('/clientes/:idCliente/comentarios/:idComentario',  (req:Request, res:Res
     comentarioModel.findById(idComentario).then((comentarioCliente: IComentario | null) =>{
         
         if(!comentarioCliente){
-            return res.json({
+            return res.status(404).json({
                 mensaje:"Comentario no encontrado",
                 comentarioCliente
             })    
@@ -104,7 +104,7 @@ app.get('/clientes/:idCliente/comentarios/:idComentario',  (req:Request, res:Res
             comentarioCliente
         })
     }).catch((err:any) =>{
-        return res.json({
+        return res.status(500).json({
             mensaje:"Error interno",
             err
         })

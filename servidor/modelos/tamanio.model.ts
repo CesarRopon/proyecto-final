@@ -9,7 +9,7 @@ export interface ITamanio extends Document{
 let esquemaTamanio = new Schema({
     strDescripcion:{
         type:String,
-        required:[true, 'No se ingreso el nombre del producto']
+        required:[true, 'No se ingreso la dscripcion del tamaño']
     },
     nmbCosto:{
         type:Number,

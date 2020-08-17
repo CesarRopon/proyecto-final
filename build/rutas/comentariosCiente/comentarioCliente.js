@@ -13,7 +13,7 @@ app.get('/clientes/:idCliente/comentarios', function (req, res) {
     var idCliente = req.params.idCliente;
     comentario_model_1.default.find({ idCliente: idCliente }).populate('idCliente').then(function (comentariosCliente) {
         if (comentariosCliente.length === 0) {
-            return res.json({
+            return res.status(404).json({
                 mensaje: "No hay comentarios",
                 comentariosCliente: comentariosCliente
             });
@@ -34,12 +34,12 @@ app.post('/clientes/:idCliente/comentarios', function (req, res) {
     var newComment = req.body;
     new comentario_model_1.default(newComment).save().then(function (nuevoComm) {
         if (!nuevoComm) {
-            return res.json({
+            return res.status(404).json({
                 mensaje: "No enviado",
                 nuevoComm: nuevoComm
             });
         }
-        return res.json({
+        return res.status(200).json({
             mensaje: "Enviado",
             nuevoComm: nuevoComm
         });
@@ -56,7 +56,7 @@ app.put('/clientes/:idCliente/comentarios/:idComentario', function (req, res) {
     var contestacion = req.body;
     comentario_model_1.default.findByIdAndUpdate(idComentario, { $set: contestacion }).then(function (contestacionAdmin) {
         if (!contestacionAdmin) {
-            return res.json({
+            return res.status(404).json({
                 mensaje: "No contestado",
                 contestacionAdmin: contestacionAdmin
             });
@@ -66,7 +66,7 @@ app.put('/clientes/:idCliente/comentarios/:idComentario', function (req, res) {
             contestacionAdmin: contestacionAdmin
         });
     }).catch(function (err) {
-        return res.json({
+        return res.status(500).json({
             mensaje: "Error interno",
             err: err
         });
@@ -78,7 +78,7 @@ app.get('/clientes/:idCliente/comentarios/:idComentario', function (req, res) {
     var idComentario = req.params.idComentario;
     comentario_model_1.default.findById(idComentario).then(function (comentarioCliente) {
         if (!comentarioCliente) {
-            return res.json({
+            return res.status(404).json({
                 mensaje: "Comentario no encontrado",
                 comentarioCliente: comentarioCliente
             });
@@ -88,7 +88,7 @@ app.get('/clientes/:idCliente/comentarios/:idComentario', function (req, res) {
             comentarioCliente: comentarioCliente
         });
     }).catch(function (err) {
-        return res.json({
+        return res.status(500).json({
             mensaje: "Error interno",
             err: err
         });

@@ -68,7 +68,7 @@ exports.app = app;
 app.get('/clientes', function (req, res) {
     cliente_model_1.default.find({ blnActivo: true }).then(function (cliente) {
         if (cliente.length === 0) {
-            return res.json({
+            return res.status(404).json({
                 mensaje: "No se encontraron clientes",
                 contenido: cliente
             });
@@ -91,7 +91,7 @@ app.put('/clientes/changePass/:strEmail', function (req, res) {
     console.log(newPass + " " + emailAdmin);
     cliente_model_1.default.findOne({ strEmail: emailAdmin }).then(function (cliente) {
         if (!cliente) {
-            return res.json({
+            return res.status(404).json({
                 mensaje: "No existe el correo"
             });
         }
@@ -102,7 +102,7 @@ app.put('/clientes/changePass/:strEmail', function (req, res) {
                     mensaje: "No se pudo cambiar la contraseña"
                 });
             }
-            return res.json({
+            return res.status(404).json({
                 mensaje: "Contraseña actualizada"
             });
         }).catch(function () {
@@ -111,7 +111,7 @@ app.put('/clientes/changePass/:strEmail', function (req, res) {
             });
         });
     }).catch(function (err) {
-        return res.json({
+        return res.status(500).json({
             mensaje: "Error interno"
         });
     });
@@ -120,7 +120,7 @@ app.post('/clientes/login', function (req, res) {
     var _a = req.body, strEmail = _a.strEmail, strPassword = _a.strPassword;
     cliente_model_1.default.findOne({ strEmail: strEmail }).then(function (cliente) {
         if (!cliente) {
-            return res.json({
+            return res.status(404).json({
                 mensaje: "Correo incorrecto",
                 contenido: cliente
             });

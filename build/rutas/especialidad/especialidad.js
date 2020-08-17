@@ -106,7 +106,7 @@ app.put('/especialidades/:idEspecialidad', function (req, res) {
 app.delete('/especialidades/:idEspecialidad', function (req, res) {
     var idEspecialidad = req.params.idEspecialidad;
     if (idEspecialidad.length < 24) {
-        return res.json({
+        return res.status(404).json({
             mensaje: "Error de id",
             contenido: "Este id para especialidad no es valido"
         });

@@ -12,7 +12,7 @@ exports.app = app;
 app.get('/pedidos', function (req, res) {
     pedido_model_1.default.find({ blnStatus: false }).populate('idCliente').then(function (pedidos) {
         if (pedidos.length === 0) {
-            return res.json({
+            return res.status(404).json({
                 mensaje: "No hay pedidos",
                 contenido: ""
             });
@@ -22,7 +22,7 @@ app.get('/pedidos', function (req, res) {
             contenido: pedidos
         });
     }).catch(function (err) {
-        return res.json({
+        return res.status(500).json({
             mensaje: "Error interno",
             contenido: err
         });
@@ -33,7 +33,7 @@ app.get('/pedidos/:idPedido', function (req, res) {
     var totalCarrito = 0;
     pedido_model_1.default.findById(idPedido).populate('idCliente').populate('idUbicacion').populate('aJsnDetallePedido.idProducto').then(function (pedidoEspecifico) {
         if (!pedidoEspecifico) {
-            return res.json({
+            return res.status(404).json({
                 mensaje: "No se encontro el pedido",
                 contenido: ""
             });
@@ -45,7 +45,7 @@ app.get('/pedidos/:idPedido', function (req, res) {
             totalCarrito: totalCarrito
         });
     }).catch(function (err) {
-        return res.json({
+        return res.status(500).json({
             mensaje: "Error interno",
             contenido: err
         });
@@ -55,12 +55,12 @@ app.post('/pedidos', function (req, res) {
     var pedido = req.body;
     new pedido_model_1.default(pedido).save().then(function (newPedido) {
         if (!newPedido) {
-            return res.json({
+            return res.status(404).json({
                 mensaje: "No se pudo hacer el pedido",
                 contenido: ""
             });
         }
-        return res.json({
+        return res.status(200).json({
             mensaje: "Pedido hecho, espera confirmacion del vendedor",
             contenido: newPedido
         });
@@ -86,7 +86,7 @@ app.put('/pedidos/:idPedido', function (req, res) {
             contenido: pedidoUpdated
         });
     }).catch(function (err) {
-        return res.json({
+        return res.status(500).json({
             mensaje: "Error interno",
             contenido: err
         });

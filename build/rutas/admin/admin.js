@@ -150,7 +150,7 @@ app.get('/admin/:strEmail', function (req, res) {
                 contenido: admin
             });
         }
-        return res.json({
+        return res.status(404).json({
             mensaje: "Usuario no encontrado",
             contenido: "Prueba con otro usuario"
         });
@@ -166,12 +166,12 @@ app.get('/admins/:idAdmin', function (req, res) {
     var idAdmin = req.params.idAdmin;
     admin_model_1.default.findById(idAdmin).then(function (admin) {
         if (!admin) {
-            return res.json({
+            return res.status(404).json({
                 mensaje: "No se encontro",
                 contenido: admin
             });
         }
-        return res.json({
+        return res.status(200).json({
             msg: "Usuario encontrado",
             contenido: admin
         });
@@ -186,7 +186,7 @@ app.get('/admins/:idAdmin', function (req, res) {
 app.delete('/admins/:idAdmin', function (req, res) {
     var idAdmin = req.params.idAdmin;
     if (idAdmin.length < 24 || idAdmin.length > 24) {
-        return res.json({
+        return res.status(404).json({
             mensaje: "Error de id",
             contenido: "Este id debe tener un formato valido"
         });
@@ -214,7 +214,7 @@ app.post('/admin/login', function (req, res) {
     var _a = req.body, strEmail = _a.strEmail, strPassword = _a.strPassword;
     admin_model_2.default.findOne({ strEmail: strEmail }).then(function (admin) {
         if (!admin) {
-            return res.json({
+            return res.status(404).json({
                 mensaje: "Correo incorrecto",
                 contenido: admin
             });
@@ -254,7 +254,7 @@ app.put('/admins/changePass/:strEmail', function (req, res) {
     console.log(newPass + " " + emailAdmin);
     admin_model_2.default.findOne({ strEmail: emailAdmin }).then(function (admin) {
         if (!admin) {
-            return res.json({
+            return res.status(404).json({
                 mensaje: "No existe el correo"
             });
         }
@@ -265,7 +265,7 @@ app.put('/admins/changePass/:strEmail', function (req, res) {
                     mensaje: "No se pudo cambiar la contraseña"
                 });
             }
-            return res.json({
+            return res.status(200).json({
                 mensaje: "Contraseña actualizada"
             });
         }).catch(function () {
@@ -274,7 +274,7 @@ app.put('/admins/changePass/:strEmail', function (req, res) {
             });
         });
     }).catch(function (err) {
-        return res.json({
+        return res.status(500).json({
             mensaje: "Error interno"
         });
     });

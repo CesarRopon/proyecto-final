@@ -17,7 +17,7 @@ app.get('/clientes/:idCliente/ubicaciones', (req:Request, res:Response) =>{
 
     UbicacionModel.find({idCliente:idCliente}).then((ubicaciones:IUbicacion[]) =>{
         if(ubicaciones.length==0){
-            return res.json({
+            return res.status(404).json({
                 mensaje:"Error",
                 contenido:"No hay ubicaciones"
             })
@@ -69,7 +69,7 @@ app.get('/clientes/:idCliente/ubicaciones/:idUbicacion', (req:Request, res:Respo
         })
 
     }).catch((err: any ) =>{
-        return res.json({
+        return res.status(500).json({
             mensaje: "Error interno",
             contenido:err
         })
@@ -96,7 +96,7 @@ app.post('/clientes/:idClientes/ubicaciones', (req: Request, res: Response) =>{
             contenido: ubicacion
         })
     }).catch((err:any) =>{
-        return res.json({
+        return res.status(500).json({
             mensaje: "[Error interno]",
             contenido: err
         })
@@ -111,7 +111,7 @@ app.put('/clientes/:idCliente/ubicaciones/:idUbicacion', (req:Request, res:Respo
     let idUbicacion:string = req.params.idUbicacion;
 
     if(idUbicacion.length<23){
-        return res.json({
+        return res.status(404).json({
             mensaje: "Id error",
             contenido: "El id de la ubicacion debe contener 24 caracteres"
         })
@@ -131,7 +131,7 @@ app.put('/clientes/:idCliente/ubicaciones/:idUbicacion', (req:Request, res:Respo
             contenido: "Se actualizo correctamente"
         })
     }).catch((err: any) =>{
-        return res.json({
+        return res.status(500).json({
             mensaje: "Error interno",
             contenido: err
         })

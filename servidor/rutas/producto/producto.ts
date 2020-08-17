@@ -12,7 +12,7 @@ app.get('/productos', (req:Request, res:Response) =>{
     
     productoModel.find({blnActivo:true}).then((producto: IProducto[]) =>{
         if(producto.length===0){
-           return res.json({
+           return res.status(404).json({
                msg:"No hay",
                contenido:{
                    producto
@@ -107,11 +107,11 @@ app.post('/productos',(req:Request, res:Response, next) =>{
        console.log("Api post productos");
        console.log(nProd);
        return res.json({
-        mensaje: "ya jala esta mamada"
+        mensaje: ""
     })
    }else{
     return res.json({
-        mensaje:"No mames"
+        mensaje:""
     })
 
    }*/

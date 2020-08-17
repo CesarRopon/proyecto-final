@@ -10,7 +10,7 @@ app.get ('/clientes',   (req:Request, res: Response) =>{
 
     clienteModel.find({blnActivo:true}).then((cliente:ICliente[]) =>{
         if(cliente.length ===0){
-            return res.json({
+            return res.status(404).json({
                 mensaje:"No se encontraron clientes",
                 contenido: cliente
             })
@@ -40,7 +40,7 @@ app.put('/clientes/changePass/:strEmail', (req:Request, res:Response) =>{
     
     clienteModel.findOne({strEmail: emailAdmin}).then((cliente : ICliente | null) =>{
         if(!cliente){
-            return res.json({
+            return res.status(404).json({
                 mensaje:"No existe el correo"
             })
         }
@@ -52,7 +52,7 @@ app.put('/clientes/changePass/:strEmail', (req:Request, res:Response) =>{
                         mensaje:"No se pudo cambiar la contraseña"
                     })
                 }
-                return res.json({
+                return res.status(404).json({
                     mensaje:"Contraseña actualizada"
                 })
             }).catch(() =>{
@@ -61,7 +61,7 @@ app.put('/clientes/changePass/:strEmail', (req:Request, res:Response) =>{
                 })
             })
         }).catch((err:any) =>{
-           return res.json({
+           return res.status(500).json({
                mensaje:"Error interno"
            }) 
         })
@@ -77,7 +77,7 @@ app.put('/clientes/changePass/:strEmail', (req:Request, res:Response) =>{
     
         clienteModel.findOne({strEmail : strEmail}).then((cliente: ICliente| null) =>{
             if(!cliente){
-                return res.json({
+                return res.status(404).json({
                     mensaje:"Correo incorrecto",
                     contenido: cliente
                 })
